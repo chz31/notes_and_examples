@@ -52,7 +52,7 @@ tri = vtk.vtkTriangleFilter()
 tri.SetInputConnection(extrude.GetOutputPort())
 tri.Update()
 
-thickNode = slicer.mrmlScene.AddNewNodeByClass("vtkMRMLModelNode", "RetractorPlane_1mm")
+thickNode = slicer.mrmlScene.AddNewNodeByClass("vtkMRMLModelNode", "RetractorPlane_05mm")
 thickNode.SetAndObservePolyData(tri.GetOutput())
 thickNode.CreateDefaultDisplayNodes()
 
