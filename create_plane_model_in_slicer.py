@@ -43,7 +43,8 @@ normals.Update()
 extrude = vtk.vtkLinearExtrusionFilter()
 extrude.SetInputConnection(normals.GetOutputPort())
 extrude.SetExtrusionTypeToNormalExtrusion()
-extrude.SetScaleFactor(thickness_mm)     # thickness in mm
+# extrude.SetScaleFactor(thickness_mm)     # thickness in mm
+extrude.SetScaleFactor(-thickness_mm) # Flip the direction of extrusion
 extrude.CappingOn()                      # adds the "back face"
 extrude.Update()
 
