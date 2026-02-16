@@ -1,17 +1,15 @@
-Activate nnInteractive
-
-Open 3D Slicer
-
-Make sure the image is isotropic. Switch to each 
+**Activate nnInteractive**<br>
+Open 3D Slicer<br>
+Make sure the image is isotropic. Switch to `Crop Volume` module. Create an ROI. 
 
 Switch to nnInteractive module
 
 Use nnInteractive to segment the inferior rectus muscles on both sides
 
-Use the below script to extract centerline
+Download the below script to extract centerline
 [muscle_centerline_extraction.py](https://github.com/chz31/notes_and_examples/blob/main/muscle_centerline_extraction.py)
 
-Download the script first.
+Change the script first.
 
 In Line 1 and 2, change the volume and segmentation node names in the paranthesis
 ```
@@ -31,7 +29,8 @@ After the changes are made, click Ctrl/Command + G to run the script in Slicer.
 
 You should be able to see that centerlines have been extracted.
 
+Right click each centerline object in the `Data` module and click "Edit Properties". This will bring you to the Markups Module. 
 
-Save the entire file
+Scroll down
 
 
