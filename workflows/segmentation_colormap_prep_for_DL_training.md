@@ -1,0 +1,2 @@
+This is a workflow for generating uniform labelmap from segmentations using colormap for deep learning model training.
+
