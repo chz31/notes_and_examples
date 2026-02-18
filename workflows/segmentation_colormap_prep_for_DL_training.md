@@ -35,34 +35,9 @@ Change the file path & file name at line 34:<br>
 
 Copy line 1-54 into Slicer Python console to run it.
 
-You should see a txt file with content similar to the below one in your preferred directory. Each line marks a segment with a particular RGB color code:
-```
-# Color table file /home/zhang/Documents/color_test.txt
-# 23 values
-0 right_eyeball 42 62 77 255
-1 lateral_rectus_muscle_right 151 96 17 255
-2 superior_oblique_muscle_right 165 66 66 255
-3 levator_palpebrae_superioris_right 175 178 232 255
-4 superior_rectus_muscle_right 54 154 87 255
-5 medial_rectus_muscle_left 187 134 64 255
-6 inferior_oblique_muscle_right 177 217 95 255
-7 inferior_rectus_muscle_right 58 82 163 255
-8 optic_nerve_left 32 0 93 255
-9 left_eyeball 230 51 99 255
-10 lateral_rectus_muscle_left 217 74 99 255
-11 superior_oblique_muscle_left 189 48 18 255
-12 levator_palpebrae_superioris_left 220 156 196 255
-13 superior_rectus_muscle_left 149 252 37 255
-14 medial_rectus_muscle_right 172 130 237 255
-15 inferior_oblique_muscle_left 54 97 131 255
-16 inferior_rectus_muscle_left 170 175 82 255
-17 optic_nerve_right 157 184 137 255
-18 orbital_fat_right 128 77 94 255
-19 orbital_fat_left 120 172 136 255
-20 maxillary_sinus_right 70 135 158 255
-21 maxillary_sinus_left 54 219 67 255
-22 skull 159 12 37 255
-```
+You should see a txt file with content similar to the below one in your preferred directory. Each line marks a segment with a particular RGB color code:<br>
+<img width="500" alt="image" src="https://github.com/user-attachments/assets/68d94707-1e5c-456e-9431-bfa4b68224e0" />
+
 
 ### 2. Load the color.txt as color node to Slicer.
 Assuming we ware using the segmentation updated from TotalSegmentator results.<br>
@@ -105,18 +80,48 @@ for i, item in enumerate(segment_names_to_labels):
 ```
 
 ### 5. Now you can export the label map
-Change the object names in paratheses following the comment in each line
 ```
 #export segmentation into labelmap with color codes
-segmentationNode = getNode('1048')  # Change source segmentation node that will be exported to a labelmap node
+segmentationNode = getNode('601_totalSeg_corrected Copy')  # Change source segmentation node that will be exported to a labelmap node
 labelmapVolumeNode = slicer.mrmlScene.AddNewNodeByClass("vtkMRMLLabelMapVolumeNode")
-referenceVolumeNode = slicer.util.getNode('2: DummySeriesDesc! - acquisitionNumber 1 isotropic') # it could be set to the master volume
+referenceVolumeNode = slicer.util.getNode('601:Isotropic') # set the volume node
 segmentIds = segmentationNode.GetSegmentation().GetSegmentIDs()  # export all segments
-colorTableNode = slicer.util.getNode('color_2')  # created from scratch or loaded from file
+colorTableNode = slicer.util.getNode('color')  # Change to the import colortable node name
 
 slicer.modules.segmentations.logic().ExportSegmentsToLabelmapNode(segmentationNode, segmentIds, labelmapVolumeNode, referenceVolumeNode, slicer.vtkSegmentation.EXTENT_REFERENCE_GEOMETRY, colorTableNode)
 ```
+**1048: left eyeball also covered right eyeball. Need to modify it and retrain it. Also check other specimens to make sure they are good.**
+
+Alternatively, right click the segmentation node, and click "Edit properties".
+In "Export/import models and labelmaps" section, expand "Advanced". <br>
+Select "Reference volume", check "Use color table values", and select the colortable node. Click "Export".<br>
+<img width="500" alt="image" src="https://github.com/user-attachments/assets/ddcb8fb4-a613-489c-bef4-00b477ee7215" />
+
+In either way, you will see a labelmap node exported in the Data module.
+
+If you use script to create it, it will be names ad "LabelMapVolume" by default.
+Otherwise, it will be names as `segmentation_name-label`
 
 ### 6. Save the results
-Right click 
+Right click to export the image, label map, and raw segmentations to different folders.<br>
+**The image and label map of the same sample should use the same name, both in NIFTI format (.nii.gz), and be save into `/images` and `/labels` folders separately.**
+For example, for sample 1048, both names are 1048.nii.gz
+
+### 7. (Optional) Testing the consistency of labels
+Monai has a method to test the label consistency as shown in this file [test_label_consistency.py](https://github.com/chz31/notes_and_examples/blob/main/test_label_consistency.py)
+
+First, download the Python script. In line 6, change the path to `source_labels = "/your/path/to/labelmap/dir/"`
+
+To do it, in the Monai conda environment (assuming installed in a conda environment)
+
+Open terminal, then `conda activate your_environment`
+
+Then type:
+`python /your/path/to/test_label_consistency.py`
+
+You should see the unique labels are printed out from each label map:<br>
+<img width="500" alt="image" src="https://github.com/user-attachments/assets/8345a562-c1ba-48c5-bf78-b329616c327f" />
+
+
+Don't do it if you have a lot of files. I will modify it later to catch any inconsistencies.
 
