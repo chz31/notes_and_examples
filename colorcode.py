@@ -4,9 +4,29 @@
 # Press Double Shift to search everywhere for classes, files, tool windows, actions, and settings.
 
 #color table
-segment_names_to_labels = [("right_eyeball", 0), ("lateral_rectus_muscle_right", 1), ("superior_oblique_muscle_right", 2), ("levator_palpebrae_superioris_right", 3), ("superior_rectus_muscle_right", 4), ("medial_rectus_muscle_left", 5), ("inferior_oblique_muscle_right", 6), ("inferior_rectus_muscle_right", 7),
-                           ("optic_nerve_left", 8), ("left_eyeball", 9), ("lateral_rectus_muscle_left", 10), ("superior_oblique_muscle_left", 11), ("levator_palpebrae_superioris_left", 12), ("superior_rectus_muscle_left", 13), ("medial_rectus_muscle_right", 14), ("inferior_oblique_muscle_left", 15),
-                           ("inferior_rectus_muscle_left", 16), ("optic_nerve_right", 17), ("orbital_fat_right", 18), ("orbital_fat_left", 19), ("maxillary_sinus_right", 20), ("maxillary_sinus_left", 21), ("skull", 22)]
+segment_names_to_labels = [("right_eyeball", 1), 
+                           ("lateral_rectus_muscle_right", 2), 
+                           ("superior_oblique_muscle_right", 3), 
+                           ("levator_palpebrae_superioris_right", 4), 
+                           ("superior_rectus_muscle_right", 5), 
+                           ("medial_rectus_muscle_left", 6), 
+                           ("inferior_oblique_muscle_right", 7), 
+                           ("inferior_rectus_muscle_right", 8),
+                           ("optic_nerve_left", 9), 
+                           ("left_eyeball", 10), 
+                           ("lateral_rectus_muscle_left", 11), 
+                           ("superior_oblique_muscle_left", 12), 
+                           ("levator_palpebrae_superioris_left", 13), 
+                           ("superior_rectus_muscle_left", 14), 
+                           ("medial_rectus_muscle_right", 15), 
+                           ("inferior_oblique_muscle_left", 16),
+                           ("inferior_rectus_muscle_left", 17), 
+                           ("optic_nerve_right", 18), 
+                           ("orbital_fat_right", 19), 
+                           ("orbital_fat_left", 20), 
+                           ("maxillary_sinus_right", 21), 
+                           ("maxillary_sinus_left", 22), 
+                           ("skull", 23)]
 
 #Start from 1 next time
 
