@@ -10,7 +10,12 @@ Activate the environment: `conda activate torchio`
 
 Installation: `pip install torchio`
 
-In Ubuntu, 
+In Ubuntu, it reproted error below but torchio appeared to run well. Pytorch might also need to be installed before pip install torchio.
+```
+ERROR: pip's dependency resolver does not currently take into account all the packages that are installed. This behaviour is the source of the following dependency conflicts.
+timm 1.0.19 requires torchvision, which is not installed.
+batchgenerators 0.25.1 requires pandas, which is not installed.
+```
 
 In Windows, Pytorch might need to be installed first.
 
