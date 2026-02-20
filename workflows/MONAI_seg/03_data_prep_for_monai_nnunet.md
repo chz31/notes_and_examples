@@ -1,6 +1,8 @@
 This workflow is about how to prepare for data preparation for monai_nnunet traning
 
-### 1. Install Monai and nnUNet
-1. Install pytorch 2.6 or 2.7
+Activate the conda environment for monai nnunet and open jupyter notebook
+```
+conda activate your_environment_name
 
-2. Install Monai
+jupyter notebook
+```
