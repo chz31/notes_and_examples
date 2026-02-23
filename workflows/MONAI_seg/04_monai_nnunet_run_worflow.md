@@ -6,16 +6,26 @@ To run this tutorial, the images and labels, including the augmented copies shou
 
 A json format data list for the traning dataset `msd_monai_nnunet_tr_folds.json` should also be created (see [tutorial 03](https://github.com/chz31/notes_and_examples/blob/main/workflows/MONAI_seg/03_data_prep_for_monai_nnunet.md))
 
-### First, prepare an `input.yaml` to configure the data list file and input and output directories.
-Here is a sample input.yaml and its content:
+### 1. Prepare an `input.yaml` to configure the data list file and input and output directories.
+Here is a sample [input.yaml](https://github.com/chz31/notes_and_examples/blob/main/workflows/MONAI_seg/msd_monai_nnunet_tr_folds.json) and its content:
 ```
 modality: CT
 datalist: "./msd_monai_nnunet_tr_folds.json" #path to the data list json file. 
-dataroot: "./monai_nn_tr" #path to 
+dataroot: "./monai_nn_tr" #path to the folder containing raw images and labels.
 nnunet_preprocessed: "./data_preprocessing/nnUNet_preprocessed" # directory for storing pre-processed data (optional)
 nnunet_raw: "./data_preprocessing/nnUNet_raw_data_base" # directory for storing formated raw data (optional)
 nnunet_results: "./results_test1/nnUNet_trained_models" # directory for storing trained model checkpoints (optional)
 ```
-The last three lines are optional but recommended.
+The last three lines are optional but still recommended. Putting `nnunet_preprocessed` 
 
+### 2. Put the data list (json) file, and `input.ymal`, and the raw images and labels folder into the same directory.
+Create a `data_preprocessing` folder in the same directory. This allows reusing the preprocessed dataset for different trainings.
+
+Create a another folder to save the results, such as `results_test1`.
+
+If you change the folder names, you can manually edit the `input.yaml' accordingly.
+
+
+### 3. Data preprocessing
+Run the following command:
 
