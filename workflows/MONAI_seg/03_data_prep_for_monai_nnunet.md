@@ -1,6 +1,7 @@
 This workflow is about how to prepare for data preparation for monai_nnunet traning
 
 ### 1. Arrange the files into a specific format
+Recommendation: a root folder called `monai_nnunet_tr`. The three subfolders must be named as `imagesTr`, `imagesTs`, and `labelsTr`.
 ```
 monai_nnunet_tr
       ------------imagesTr
@@ -19,7 +20,6 @@ conda activate your_environment_name
 
 jupyter notebook
 ```
-
 Download the notebook [nnunet_json_generator.ipynb](https://github.com/chz31/notes_and_examples/blob/main/nnunet_json_generator.ipynb)
 
 In Jupyter notebook, locate this notebook and open it.
