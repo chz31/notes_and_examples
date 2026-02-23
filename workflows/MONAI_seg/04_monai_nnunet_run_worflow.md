@@ -75,7 +75,9 @@ In the monitor, you should be able to observe the loss dropping:<br>
 
 Results will be stored in five different folders in `/path/to/nnunet_results/nnUNet_trained_models/Dataset001_monai_nn_tr/nnUNetTrainer_1000epochs__nnUNetPlans__3d_fullres`
 
-By default, nnUNetTrainer will train 1000 epochs for each model. You can change the epoch number by adding a `trainer_class_name` argument to specify epochs numbers (for available epochs, see [tutorial](https://github.com/Project-MONAI/tutorials/tree/main/nnunet#:~:text=The%20supported%20trainer_class_name,nnUNetTrainer_8000epochs)): 
+By default, nnUNetTrainer will train 1000 epochs for each model. 
+
+You can change the epoch number by adding a `trainer_class_name` argument to specify epochs numbers (for available epochs, see [tutorial](https://github.com/Project-MONAI/tutorials/tree/main/nnunet#:~:text=The%20supported%20trainer_class_name,nnUNetTrainer_8000epochs)): 
 ```
 for f in 0 1 2 3 4; do
   python -m monai.apps.nnunet nnUNetV2Runner train_single_model \
