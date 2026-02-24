@@ -18,6 +18,16 @@ nnunet_results: "./results_test1/nnUNet_trained_models" # directory for storing 
 ```
 The last three lines are optional but still recommended. Putting `nnunet_preprocessed` 
 
+**Note that on Windows, `/` needs to be changed to `\\`:** 
+```
+modality: CT
+datalist: ".\\msd_monai_nnunet_tr_folds.json"
+dataroot: ".\\monai_nnunet_tr"
+nnunet_preprocessed: ".\\p\\nnUNet_preprocessed"
+nnunet_raw: ".\\p\\nnUNet_raw_data_base"
+nnunet_results: ".\\o\\nnUNet_trained_models"
+```
+
 ### 2. Put the data list (json) file, and `input.ymal`, and the raw images and labels folder into the same directory.
 Create a `data_preprocessing` folder in the same directory. This allows reusing the preprocessed dataset for different trainings.
 
