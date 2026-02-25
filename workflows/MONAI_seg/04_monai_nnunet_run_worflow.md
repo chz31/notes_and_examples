@@ -69,6 +69,12 @@ python -m monai.apps.nnunet nnUNetV2Runner train_single_model --input_config "./
     --trainer_class_name "nnUNetTrainer_5epochs"
 ```
 
+In Windows, replace `\` with `^` to change lines, or simply run the one line command:<br>
+`python -m monai.apps.nnunet nnUNetV2Runner train_single_model --input_config "./input.yaml" --config "3d_fullres" --fold 0 --trainer_class_name "nnUNetTrainer_5epochs"`
+
+If it reported `'CUDA_VISIBLE_DEVICES' is not recognized as an internal or external command, operable program or batch file.`, you can manually set up GPU ID as Windows handles GPU ID differently from Linux: <br>
+`set CUDA_VISIBLE_DEVICES=0`
+
 **Use all available GPU(s) to train five models under the 3d_fullres configuration** <br>
 '3d_fullres' configuration should be sufficient for the 3D segmentation model training. By default, monai-nnunet will train five different models with cross-validation (i.e., each time, it will randomly pick up some cases as validating dataset without being included in the training process). 
 ```
