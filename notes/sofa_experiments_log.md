@@ -287,7 +287,7 @@ toolNode.addObject(
 Minimal penetration at the protrusion at the anterior edge
 
 **Youngs = 3e4 poisson = 0.2 rayleighMass=0.01 rayleighStiffness=0.1**
-Minimal penetration at the protrusion at the anterior edge; It appears that the anterior protrusion protruded earlier probably due to the stiffness (I could be wrong)
+Minimal penetration at the protrusion at the anterior edge; It appears that the anterior protrusion protruded earlier probably due to the stiffness (I could be wrong) <br>
 <img width="300" alt="image" src="https://github.com/user-attachments/assets/d8f53957-a509-4491-acbf-314de848aaec" />
 
 Task: write a helper function to convert Slicer transform to SOfA initial position for testing.
