@@ -209,7 +209,7 @@ Task 2:
 
 
 
-### Feb 20:
+### Feb 24:
 Previously penetration of soft tissue might be caused by the protruded or elevated area near the anterior edge. 
 If the plane is underneath a significant part of the globe, then retraction works well even for faster movement by holding the lifting key.
 A protrusion near the anterior edge still penetrated the plate. Another elevated area in the middle also penetrated the plate eventually.
@@ -261,6 +261,43 @@ ChatGPT summary: Contact stability in orbital retraction is highly dependent on 
 
 Next time, also test a stiffer model and perhaps heterogeneous model without orbit. Compare damping vs no damping
 
+### Feb 26
+dt = 0.01<br>
+movement = 0.05/dt<br>
+Initial frame rate 1.4 --> after 1s: <1 --> after 3s: 0.6 --> after 4s: < 0.5
+
+This movement is probably enough for testing:
+```
+toolNode.addObject(
+    'LinearMovementProjectiveConstraint',
+    template='Rigid3',
+    keyTimes="0 1 2 3 4 5 6",
+    movements="""
+        0 0 0   0 0 0
+        0 0 5   0 0 0
+        0 0 10   0 0 0
+        0 0 15   0 0 0
+        0 0 15   0 0 0
+        0 0 15   0 0 0
+    """
+)
+```
+
+**Youngs = 3e2 poisson = 0.2 rayleighMass=0.01 rayleighStiffness=0.1**
+Minimal penetration at the protrusion at the anterior edge
+
+**Youngs = 3e4 poisson = 0.2 rayleighMass=0.01 rayleighStiffness=0.1**
+Minimal penetration at the protrusion at the anterior edge; It appears that the anterior protrusion protruded earlier probably due to the stiffness (I could be wrong)
+<img width="300" alt="image" src="https://github.com/user-attachments/assets/d8f53957-a509-4491-acbf-314de848aaec" />
+
+Task: write a helper function to convert Slicer transform to SOfA initial position for testing.
+
+**Task: Quantify testing as stability metrics**
+
+Task: test differemt rayleigh damping
+
+Task: test different lifting distances, velocity, contact distances, and dt
 
 
-
+### March 02
+Extract 
