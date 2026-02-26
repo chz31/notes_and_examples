@@ -39,6 +39,12 @@ points away from the actual contact area as shown in a screenshot. Collision sti
 Change to `contactDistance=0.1` at least did not cause the explosion of tetrahedra and visually chaotic collision detection.
 However, the collision is still very slow. Penetration also still occured.
 
+<img width="300" alt="Screenshot from 2026-02-12 11-07-58" src="https://github.com/user-attachments/assets/aedfd0cd-0259-4310-a651-ce14b56bf3a7" />
+<img width="300" alt="Screenshot from 2026-02-12 11-36-28" src="https://github.com/user-attachments/assets/2e38e45f-3c6d-484a-8874-8d88442f8fb9" />
+<img width="300" alt="Screenshot from 2026-02-12 17-26-42" src="https://github.com/user-attachments/assets/b2f94b71-0d55-4803-8146-5e2e72aa1318" />
+<img width="300" alt="Screenshot from 2026-02-12 17-38-35" src="https://github.com/user-attachments/assets/1c135f0a-e4ad-475f-ad58-118fd5757a9e" />
+
+
 
 Next time:
 Create a partial collision model of the orbital tissue
@@ -117,6 +123,12 @@ Actually, if I holding the tool lifting key and forced the tool to move upward, 
 However, the penetration also became more and more severe. Eventually collision model just failed probably because 
 the computation became too intense.
 
+<img width="300" alt="Screenshot from 2026-02-17 09-46-00" src="https://github.com/user-attachments/assets/0f39d93f-5947-44d9-98eb-1abd7b09d484" />
+<img width="300" alt="Screenshot from 2026-02-17 11-07-56" src="https://github.com/user-attachments/assets/8a061e74-e60f-4fbb-a4c9-3f65f879ec25" />
+<img width="300" alt="Screenshot from 2026-02-17 13-18-07" src="https://github.com/user-attachments/assets/742607da-d564-43f8-9cf2-7df23e7ad067" />
+<img width="300" alt="Screenshot from 2026-02-17 13-40-48" src="https://github.com/user-attachments/assets/044669d5-7934-4bd9-baee-8dbad93ced6e" />
+
+
 When dragging orbital tissue within the orbit, change mouse setting to attach cursor at a point using bilatConstraint
 
 **Need to start from the position for lifting tissue to control variables.**
@@ -192,6 +204,10 @@ a small area of fat herniates into the maxillary sinus.
 Task 2:
 **Don't forget to reset the controller center of mass to the current center of mass** Could this be a reason for the penetration problem?
 
+<img width="300" alt="Screenshot from 2026-02-19 10-31-35" src="https://github.com/user-attachments/assets/6db45926-b1df-44a6-82cb-9b6f217641c4" />
+<img width="300" alt="Screenshot from 2026-02-19 10-19-49" src="https://github.com/user-attachments/assets/2f701877-7a0e-497f-84da-90559ad641cf" />
+
+
 
 ### Feb 20:
 Previously penetration of soft tissue might be caused by the protruded or elevated area near the anterior edge. 
@@ -221,14 +237,18 @@ Why did the controller move with the plane during lifting? Because the bilateral
 
 
 **With releigh damping reduced tissue bouncing by reducing kinetic/oscillation energy**, looked like the results got much better, even the protruded area near the plane anterior margin did not penetrate.
-
 Eventually, penetration still occured. Need controlled tests using linear movement for more distances next time to see whether damping indeed helped.
 
+<img width="300" alt="Screenshot from 2026-02-24 15-45-40" src="https://github.com/user-attachments/assets/5efb5b5e-08b5-4be0-b6f0-0d5e14818947" />
+<img width="300" alt="Screenshot from 2026-02-24 10-41-03" src="https://github.com/user-attachments/assets/9d9ca5a9-3a79-41e3-a469-64d3a53bc7ee" />
+<img width="300" alt="Screenshot from 2026-02-24 10-29-07" src="https://github.com/user-attachments/assets/a733e206-60ff-4af7-9e36-e3a6467fdb2e" />
+
+
 SOFA notes: why small protrusions causes problem (from ChatGPT):
-When the plane is well underneath the globe → lifting works well
-When protrusions are near anterior edge → penetration occurs
-When moved slightly backward → penetration reduced
-When controller center changed → behavior improved
+- When the plane is well underneath the globe → lifting works well
+- When protrusions are near anterior edge → penetration occurs
+- When moved slightly backward → penetration reduced
+- When controller center changed → behavior improved
 
 Protrusions create local curvature mismatch --> Local curvature + low collision resolution = unstable normal estimation --> Near edge contact → reduced constraint redundancy --> Small changes in tool pose change contact graph topology
 - Fewer constraints, high local force concentration, larger penetration oscillation
