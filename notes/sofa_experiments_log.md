@@ -300,4 +300,10 @@ Task: test different lifting distances, velocity, contact distances, and dt
 
 
 ### March 02
-Extract 
+Goal: why did frame rate drop throughout time steps?
+
+Task: extract contact numbers per frame to monitor changes.
+- Switch back to genericConstraintSolver to export it (probably don't do it since I am using the SparseLDLSolver: https://www.sofa-framework.org/community/forum/topic/counting-number-of-nodes-in-contact/
+- Extracted from the contact manager.
+
+
