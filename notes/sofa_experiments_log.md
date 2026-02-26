@@ -292,12 +292,12 @@ Minimal penetration at the protrusion at the anterior edge; It appears that the 
 
 Task: write a helper function to convert Slicer transform to SOfA initial position for testing.
 
-**Task: Quantify testing as stability metrics**
-
 Task: test differemt rayleigh damping
 
-Task: test different lifting distances, velocity, contact distances, and dt
+Task: test different lifting distances, velocity, contact distances, dt, and repeated movement cycles
 
+**Task: Quantify testing as stability metrics across time steps instead of just visual examination**
+  - contact counts per frame, penetration distances, plane contact force (stable or unstable? Suddenly increase), and kinetic energey (e.g., when move slower, is it stable or suddenly increase? Is it accumulating, dissipitating, or oscillating (inssufficient damping)
 
 ### March 02
 Goal: why did frame rate drop throughout time steps?
@@ -306,4 +306,6 @@ Task: extract contact numbers per frame to monitor changes.
 - Switch back to genericConstraintSolver to export it (probably don't do it since I am using the SparseLDLSolver: https://www.sofa-framework.org/community/forum/topic/counting-number-of-nodes-in-contact/
 - Extracted from the contact manager.
 
-
+Task: alter rayleigh damping values:
+- RayleighMass = 0.005, 0.01, 0.02
+- Perhaps combined with repeated movement cycle
