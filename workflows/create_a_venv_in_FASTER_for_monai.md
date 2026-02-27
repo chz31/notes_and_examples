@@ -27,3 +27,25 @@ Create a group venv:
 ```
 create_venv monai_group -t "GCC/13.2.0 OpenMPI/4.1.6 PyTorch/2.7.0" -g orbit_seg
 ```
+
+Show versions of installed libaries, for example:
+```
+module spider matplotlib
+```
+Purge modules
+```
+ml purge
+```
+
+Check how to load a version of a library
+```
+module spider matplotlib/3.8.2
+
+# showed:
+# You will need to load all module(s) on any one of the lines below before the "matplotlib/3.8.2" module is available to load.
+# GCC/13.2.0
+```
+Load the module as instructed:
+```
+module load GCC/13.2.0 matplotlib/3.8.2
+```
