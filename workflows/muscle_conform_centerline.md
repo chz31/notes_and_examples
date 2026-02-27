@@ -52,18 +52,18 @@ Save and exit.
 
 
 Samples that has been segmented by nninteractive (if not marked "muscle curves created", muscle curves still need to be created:
-- 1224
-- 1494
-- 1570
+- 1224 (muscle curves created)
+- 1494 (muscle curves created)
+- 1570 
 - 1617 (marked wrong as 1702 in muscle pts; muscle curves created)
-- 1662 
+- 1633 (muscle curves created)
+- 1662
+- 1702 (muscle curves created)
+- 1728 (muscle curves created)
 - 1807
 - 1958
 
 Sampled that has not been segmented by nninteractive
-- 1633
-- 1702
-- 1728
 - 1756
 - 1846
 - 1928
