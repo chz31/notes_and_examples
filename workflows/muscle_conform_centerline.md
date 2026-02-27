@@ -57,11 +57,10 @@ Samples that has been segmented by nninteractive (if not marked "muscle curves c
 - 1570 
 - 1617 (marked wrong as 1702 in muscle pts; muscle curves created)
 - 1633 (muscle curves created)
-- 1662
+- 1662 (muscle curves created)
 - 1702 (muscle curves created)
 - 1728 (muscle curves created)
 - 1807
-- 1958
 
 Sampled that has not been segmented by nninteractive
 - 1756
@@ -69,3 +68,5 @@ Sampled that has not been segmented by nninteractive
 - 1928
 - 1937
 - 1944
+- 1958
+
