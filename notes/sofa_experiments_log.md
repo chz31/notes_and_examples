@@ -297,15 +297,47 @@ Task: test differemt rayleigh damping
 Task: test different lifting distances, velocity, contact distances, dt, and repeated movement cycles
 
 **Task: Quantify testing as stability metrics across time steps instead of just visual examination**
-  - contact counts per frame, penetration distances, plane contact force (stable or unstable? Suddenly increase), and kinetic energey (e.g., when move slower, is it stable or suddenly increase? Is it accumulating, dissipitating, or oscillating (inssufficient damping)
+  - contact counts per frame, penetration distances, plane contact force (stable or unstable? Suddenly increase), and kinetic energey (e.g., when move slower, is it stable or suddenly increase? Is it accumulating, dissipitating, or oscillating (insufficient damping)
+
+### March 01
+Added the orbit back. The tool can create a small gap at the floor of the orbit using homogeneous model with youngs = 3e2. Using personal laptop <br>
+<img width="300" alt="image" src="https://github.com/user-attachments/assets/32962e5a-66df-4c78-a744-62437fc34bdb" />
+<img width="300" alt="image" src="https://github.com/user-attachments/assets/94163384-ab1c-47ba-824f-44de29e150c5" />
+<br>
+However, computation becomes really slow. After 98 time steps (dt = 0.01), the FPS dropped to 0.2. Contact at the orbital roof and wall likely led to slow down.<br>
+Perhaps it is caused by material property too difficult to be compressed.<br>
+Will adding higher dampiing values lead to more compressible model?
+
+Though getting really slow, it did not look like the collision model exploded.
+
+**Error: "DefaultContactManager" did not exist** as shown by below:
+```
+for obj in root.objects:
+    print("root object:", obj.name, obj.__class__.__name__)
+```
+
+**Find where contacts are stored.** 
+- Export contacts got a bit complicated; perhaps started from exporting forces instead to see if force is stable.
+- Perhaps need to ask the **SOFA forum** how to do it, particularly referring to the CCDTightInclusion collision explosion case.
+
+**Export constraint count** can be helpful to catch the collision explosion or increasing number of collisions over time.
+
+**Export forces** and other mechanical states.
+
+A thread for write and read mechanical state (position, velocity, force, etc.): https://www.sofa-framework.org/community/forum/topic/exporting-states/
+
 
 ### March 02
 Goal: why did frame rate drop throughout time steps?
 
 Task: extract contact numbers per frame to monitor changes.
 - Switch back to genericConstraintSolver to export it (probably don't do it since I am using the SparseLDLSolver: https://www.sofa-framework.org/community/forum/topic/counting-number-of-nodes-in-contact/
-- Extracted from the contact manager.
+- Extracted from the contact manager (did not work)
 
 Task: alter rayleigh damping values:
 - RayleighMass = 0.005, 0.01, 0.02
 - Perhaps combined with repeated movement cycle
+
+Tasks:
+- Export forces
+- Export constraint count
