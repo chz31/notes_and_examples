@@ -12,6 +12,11 @@ Activate the environment
 source activate_venv mytorchvenv
 ```
 
+Install JupyterLab before using it:
+```
+pip install jupyterlab
+```
+
 Go to Interactive Apps at the FASTER portal, and open Jupyter Lab.
 
 Select 'TAMU Modulair' for the "Type of Environment"
