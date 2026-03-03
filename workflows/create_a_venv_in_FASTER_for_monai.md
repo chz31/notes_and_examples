@@ -25,6 +25,10 @@ Select the create venv under the "TAMU Modulair environment"
 
 Open JupyterLab
 
+Remove venv
+```
+delete_venv monai_group
+```
 
 ### Create a group venv (beta):
 
