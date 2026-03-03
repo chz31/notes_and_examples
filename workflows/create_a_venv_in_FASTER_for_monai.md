@@ -64,3 +64,7 @@ Show file counts per directory (may take a while):
 du - h --max-depth=1 $SCRATCH
 ```
 
+Remove a folder using recursive `-r` (remove the folder and all its content) and `-f` option (force removing; no confirmation asked).
+```
+rm -rf $SCRATCH/.conda/*
+```
