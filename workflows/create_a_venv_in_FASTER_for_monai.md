@@ -49,3 +49,9 @@ Load the module as instructed:
 ```
 module load GCC/13.2.0 matplotlib/3.8.2
 ```
+
+Show file counts per directory (may take a while):
+```
+du - h --max-depth=1 $SCRATCH
+```
+
