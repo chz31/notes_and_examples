@@ -359,5 +359,5 @@ One way to let the reaction impulse change the plane DOF is to use a stiff Sprin
 
 BilateralLagrangianConstraint can also may also enable it.
 
-
+I could also export soft tissue force to monitor contact explosion indirectly. **Note that soft tissue mstate force include contact force, damping, internal force, etc., depending on the timing.**
 
