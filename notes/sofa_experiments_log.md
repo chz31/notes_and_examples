@@ -341,3 +341,23 @@ Task: alter rayleigh damping values:
 Tasks:
 - Export forces
 - Export constraint count
+
+**Tested export plate force**<br>
+Using `toolMO.force.array()[0]` for the rigid3 force vector
+Plate force returns zero due to added LinearMovementProjectiveConstraint.
+
+Reason: when collision happens, the solver solves for adding new constraints, including contact non peneration, bilateral constraint, and friction, to the mechanical states of the object, i.e., to correct the behavior of the objects.
+Typically, both the rigid and soft objects will receive opposite impulses from the constraints.
+In this case, only the soft tissue will receive the constraints because its DOF, the mechanical state, if free.
+The movement of the planeis fixed by a defined trajectory by the LinearMovementProjectiveConstraint. It moved according to the trajectory defined by the Projective Constraint.
+
+Thus, the plane DOF is fixed by the projective constraint and behaved like a moving boundary condition as an infinite mass kinematic boundary. The reaction impluses from collision added to the plane cannot override/modify the DOF fixed by the Projective Constraint. Thus, the export force will always be zero. The plane will move exactly as the LinearMovementProjectiveConstraint defined regardless of the collision constraints and reaction impuls.
+
+The reaction from the collision still and only exists in the constraints lambda from the collision solver but cannot modify the DOF of the plane. Thus, monitoring constraint counts and magnitude can be useful signals for detect issues such as oscillation and contact explosion (suddenly more contact pairs, thus much more constrants).
+
+One way to let the reaction impulse change the plane DOF is to use a stiff Spring model to use a spring force to drive the plane (via the controller?): `F_contact + F_drive = Ma.`
+
+BilateralLagrangianConstraint can also may also enable it.
+
+
+
