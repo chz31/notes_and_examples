@@ -361,3 +361,10 @@ BilateralLagrangianConstraint can also may also enable it.
 
 Also exported soft tissue force to monitor contact explosion indirectly. **Note that soft tissue mstate force include contact force, damping, internal force, etc., depending on the timing.**
 
+Tissue force produced huge oscillations:
+```
+[tissueF] step= 80 t= 0.810 Fmax=8.86e+04 Frms=1.48e+03 [force] step=85 t=0.860 |F|=0.0000 [tissueF] step= 85 t= 0.860 Fmax=1.6e+05 Frms=3.02e+03 [force] step=90 t=0.910 |F|=0.0000 [tissueF] step= 90 t= 0.910 Fmax=8.38e+04 Frms=1.4e+03 [force] step=95 t=0.960 |F|=0.0000 [tissueF] step= 95 t= 0.960 Fmax=1.62e+05 Frms=3.09e+03 [force] step=100 t=1.010 |F|=0.0000 [tissueF] step= 100 t= 1.010 Fmax=3.99e+05 Frms=7.38e+03 [force] step=105 t=1.060 |F|=0.0000 [tissueF] step= 105 t= 1.060 Fmax=4.07e+05 Frms=7.34e+03 [force] step=110 t=1.110 |F|=0.0000 [tissueF] step= 110 t= 1.110 Fmax=9.02e+04 Frms=1.51e+03 [force] step=115 t=1.160 |F|=0.0000 [tissueF] step= 115 t= 1.160 Fmax=330 Frms=10.7 [force] step=120 t=1.210 |F|=0.0000 [tissueF] step= 120 t= 1.210 Fmax=1.63e+05 Frms=3.12e+03 [force] step=125 t=1.260 |F|=0.0000 [tissueF] step= 125 t= 1.260 Fmax=364 Frms=12.7 [force] step=130 t=1.310 |F|=0.0000 [tissueF] step= 130 t= 1.310 Fmax=1.68e+05 Frms=3.28e+03 [force] step=135 t=1.360 |F|=0.0000 [tissueF] step= 135 t= 1.360 Fmax=1.55e+05 Frms=3.03e+03 [force] step=140 t=1.410 |F|=0.0000 [tissueF] step= 140 t= 1.410 Fmax=7.37e+05 Frms=1.47e+04 [force] step=145 t=1.460 |F|=0.0000 [tissueF] step= 145 t= 1.460 Fmax=413 Frms=17 [force] step=150 t=1.510 |F|=0.0000 [tissueF] step= 150 t= 1.510 Fmax=434 Frms=18.3 [force] step=155 t=1.560 |F|=0.0000 [tissueF] step= 155 t= 1.560 Fmax=7.42e+05 Frms=1.45e+04 [force] step=160 t=1.610 |F|=0.0000 [tissueF] step= 160 t= 1.610 Fmax=3.71e+05 Frms=8.7e+03
+```
+It could be the force was exported wrong.
+
+Export constraints number next time
