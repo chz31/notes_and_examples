@@ -45,3 +45,32 @@ for i, item in enumerate(segment_names_to_labels):
 You should see the segment names are updated.
 
 Switch to **nnUNET** module.
+
+Run nnUNET to generate a prediction
+
+RUn below code again. Also change the segmentation node name:
+```
+#Change names to be consistent with the color table
+segment_names_to_labels = [(name.replace("_", " "), label) for name, label in segment_names_to_labels] #remove '_'
+
+segmentationNode = slicer.util.getNode("1048") #Change it to your segment name
+segmentation = segmentationNode.GetSegmentation()
+
+for i, item in enumerate(segment_names_to_labels):
+    segment = segmentation.GetNthSegment(i)
+    segment.SetName(item[0])
+    print(item)
+```
+
+Run the script [dice_compute.py](https://github.com/chz31/notes_and_examples/blob/main/dice_compute.py) to compute the dice score.
+
+Before running, update segmentation nodes names and path to save the csv.
+```
+segA = slicer.util.getNode("1224 manual")
+segB = slicer.util.getNode("1224Segmentation")
+outCsvPath = "/home/zhang/Downloads/1224_dice_results.csv"   # change as you like
+```
+
+Save the segments in `.seg.nrrd` format.
+
+
