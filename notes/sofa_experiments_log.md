@@ -403,3 +403,5 @@ ChatGPT's opinion:
 Overall, the global system and damping response is stable. The spikes of force is likely due to localized contact correction/conditioning for edge protrusions/penetrations/local basd contact geometry.
 
 Export constraints number `lambda` next time. Do the big force spkies concicide with contact/constraint bursts?
+
+Planning experiments using the **Design of Experiment** approaches.
