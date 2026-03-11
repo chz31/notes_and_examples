@@ -367,4 +367,39 @@ Tissue force produced huge oscillations:
 ```
 It could be the force was exported wrong.
 
-Export constraints number next time
+
+### March 11
+<img width="600" alt="image" src="https://github.com/user-attachments/assets/dc099d42-6da4-4af0-a815-7fd7153f7ff5" /><br>
+Kinentic energy in continnum object is based on an intergral of the mass density field multipled by v(x)^2 and then by 1/2 at the point of that field.<br>
+
+In FEM, for simple uniform and diagnol mass, it is the sum of 1*2 * m_i * vi, i = node_i, i.e., the lump of all kinetic nodal energy. Each node behaves like a single particle.
+
+Overall, if Vmax or Vrms goes up, kinetic energy goes up. Thus, v is used as a proxy to monitor kinetic energy spikes.
+
+ChatGPT's idea:
+If kinetic energy spikes, that indicates contact correction --> velocity injection --> oscillation<br>
+If kinetic energy does not spike, huge force oscillation may indicate constraint impulses but velocities corrected quickly.
+
+
+For meshmatrix mass, SOFA computes kinetic energy as:<br>
+<img width="600" alt="image" src="https://github.com/user-attachments/assets/d9809d7f-9e7e-4b95-9dbe-ed3f3b7470c4" /><br>
+Rather than just lumping nodal energy.
+
+`MeshMatrxiMass` builds a mass matrix for each mass, so the true total kinetic energy is:
+- v = nodal velocity vector
+- M = mass matrix assembled by MeshMatrixMass
+- Ek = 0.5 * v^T M v
+For a Vec3 mechanical object with N nodes in standard FEM, v is column vector of DOFs [v_1x, v_1y, v_1z, v_2x, V_2y, ... ] with 3N_node DOFs,
+In SOFA, it will be represented as a (N_node, 3) matrix but flatten during FEM computation<br>
+M is a 3N x 3N matrix
+
+In current script, `vm2 = np.sum(v**2, axis=1)` is essentially getting `||v_i||^2 = v_ix² + v_iy² + v_iz²` fpr each node, which is proportional to the global kinetic energy
+
+Overall, each node contributes a small kinentic energy. 
+
+Overall, by adding v to the export, the force still oscillated huge but velocity only shows moderate oscillation (depends on the scale, could still be large, but certainly to a lesser degree than the force) and decayed smoothly after plane motion stopped.
+
+ChatGPT's opinion:
+Overall, the global system and damping response is stable. The spikes of force is likely due to localized contact correction/conditioning for edge protrusions/penetrations/local basd contact geometry.
+
+Export constraints number `lambda` next time. Do the big force spkies concicide with contact/constraint bursts?
