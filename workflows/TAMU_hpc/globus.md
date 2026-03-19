@@ -11,6 +11,8 @@ After setting up an account, it is neccessary to join [TAMU globus subscription]
 #After untar the instllation file
 cd globusconnectpersonal-x.y.z #x.y.z is the downloaded version
 
+cd globusconnectpersonal-3.2.8
+
 #Start local globus connect
 ./globusconnectpersonal
 
