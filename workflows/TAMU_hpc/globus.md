@@ -16,6 +16,9 @@ cd globusconnectpersonal-3.2.8
 #Start local globus connect
 ./globusconnectpersonal
 
+<img width="344" height="205" alt="image" src="https://github.com/user-attachments/assets/6f5941a5-edd0-4f23-b94f-ff372ba2407c" />
+
+
 # follow th gui to connect to run below command
 ./globusconnectpersonal -start &
 
