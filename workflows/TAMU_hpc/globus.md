@@ -22,3 +22,12 @@ cd globusconnectpersonal-3.2.8
 # shut down the connect
 $ ./globusconnectpersonal -stop
 ```
+
+After connecting, log into the globus account here: [https://hprc.tamu.edu/kb/Software/Globus/](https://hprc.tamu.edu/kb/Software/Globus/)
+
+Select a collection:<br>
+<img width="800" alt="image" src="https://github.com/user-attachments/assets/8e796f18-31e8-4fb0-9b28-a8e989dfe040" />
+
+If it showed non-authorized information, just click the link to authorize through TAMU NetID.
+
+
