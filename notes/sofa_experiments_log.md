@@ -405,3 +405,37 @@ Overall, the global system and damping response is stable. The spikes of force i
 Export constraints number `lambda` next time. Do the big force spkies concicide with contact/constraint bursts?
 
 Planning experiments using the **Design of Experiment** approaches.
+
+
+### March 18
+Tested documenting constraints from "BlockGaussSeidelConstraintSolver". The reason is the behavior to monitor is happening in the Lagrangian constraint solve, not in the tool’s MechanicalObject.force due to offsetting by projective constraint.
+
+Documented:
+- currentNumConstraints → most useful first
+- constraintForces → likely the best proxy for lambda magnitude
+- currentNumConstraintGroups → secondary, less important
+- graphConstraints → probably internal structure, not first choice
+- computeConstraintForces → likely a flag/method, not the data you want
+
+`currentNumConstraints` slowly increased with small oscillations, rather than having big spikes like the tissue force array. This strongly suggests constraint accumulation / expanding active contact set, not a single catastrophic contact explosion. This appears to be consistent with gradual increasing of frame rate.
+
+Currently, the constraintForces are empty. To export it, set up its parameter to True:
+```
+root.addObject(
+    'BlockGaussSeidelConstraintSolver',
+    computeConstraintForces=True,
+    # your other parameters...
+)
+```
+The steady increasing of constraint number could be due to more contact points.
+
+Next time, add:
+- `currentNumConstraints`: best first metric for contact/constraint accumulation
+- `currentIterations`: useful to see whether the solve is becoming harder even if constraint count stays similar
+- `currentError`: useful to see whether constraint satisfaction quality worsens
+- `constraintForces`: useful, but only after enabling computeConstraintForces=True
+
+
+
+
+
