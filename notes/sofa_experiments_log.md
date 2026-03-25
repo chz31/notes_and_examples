@@ -436,6 +436,21 @@ Next time, add:
 - `constraintForces`: useful, but only after enabling computeConstraintForces=True
 
 
+### March 22 and 25
+
+Converted the test_roi_select.py into a SlicerSofa scene test_slicersofa_roi_select.py and can run properly.
+
+Use cgal to created a downsampled homegeneous mesh with 6,000 tetrahedras. Created a moderate gap in the orbit at the floor. Need to verify if the the gap is enough.
+
+However, the tool might need to be moved to fully retract the tissue. In SlicerSOFA, the retracted region could be fixed by an ROI, so the tool can be moved to retract another region. The plate can be preinstalled. The retraction can keep moving until no collision between the installed plate and the tissue, which means a gap large enough is created.
+
+Shouldn't inferior oblique stands in the way of plate insertation? Should that region be fixed by an ROI or simply let it to be retracted?
+
+When multi-material model is involved, simulation becomes much slower.
+
+For a simple case, demonstrate some robustness and stability metrics for comparison under different input perturbation. Try use DOE to test something, such as uncertainties of material properties.
+
+How to export them as stress-strain or visualize as heatmap in SOFA or Slicer.
 
 
 
