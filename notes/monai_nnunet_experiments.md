@@ -22,3 +22,5 @@ Testing using one core than switch to two cores.
 nnUNet also recommended using the new architecture as the default: [https://github.com/MIC-DKFZ/nnUNet/blob/master/documentation/resenc_presets.md](https://github.com/MIC-DKFZ/nnUNet/blob/master/documentation/resenc_presets.md)
 
 This needs to be tried next time.
+
+Also need to try restricting training CPU usage to run other programs and DL train at the same time.
