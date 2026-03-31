@@ -10,3 +10,15 @@ Tasks to do:
 - Hyperparameter tuning in MONAI nnunet
 - Test nnU-Net alone
 - Training evaluation metrics establishment
+
+
+### March 20
+monai nnunetv2 can finish training on FASTER but ran into runtime error during validation after training.
+
+Could be memory issue or using >1 CPU cores.
+
+Testing using one core than switch to two cores.
+
+nnUNet also recommended using the new architecture as the default: [https://github.com/MIC-DKFZ/nnUNet/blob/master/documentation/resenc_presets.md](https://github.com/MIC-DKFZ/nnUNet/blob/master/documentation/resenc_presets.md)
+
+This needs to be tried next time.
