@@ -453,4 +453,37 @@ For a simple case, demonstrate some robustness and stability metrics for compari
 How to export them as stress-strain or visualize as heatmap in SOFA or Slicer.
 
 
+### April 13
+Tentative workflow:
+- Place a plate first and disable plate collision for the retraction process
+- Retract tissue to expose a placed plate
+- tissue restoration
+
+Problem encountered:
+- plate need to be adjusted, such as moving more posterior to lift local protruded areas.
+<img width="300" alt="image" src="https://github.com/user-attachments/assets/0b66d815-1c24-4037-a109-b4665506bfec" />
+<img width="300" alt="Screenshot from 2026-04-14 08-42-16" src="https://github.com/user-attachments/assets/44a13140-9e3b-46d8-8b9d-8d25678887fb" />
+<img width="300" alt="image" src="https://github.com/user-attachments/assets/a9d61622-1431-43e6-966a-b9b251aefae6" />
+
+### April 14
+Probably need to save the deformed mesh, and adjust plane position within the Slicer scene.
+- From the last position, adjust plane position manually under the intersection area and export new plane centroids
+- Prepare a new SOFA scene using the adjusted plane position and deformed mesh.
+- Restart the new SOFA scene in the same Slicer scene or a new scene.
+
+I was able to create sufficient gap with one adjustment.
+<img width="300" alt="Screenshot from 2026-04-14 09-58-53" src="https://github.com/user-attachments/assets/61f6ae55-4d19-4c80-89b8-6e4637f726d6" />
+<img width="300" alt="Screenshot from 2026-04-14 09-54-44" src="https://github.com/user-attachments/assets/47ec0020-aba6-47d3-b74d-7f3603e12c1e" />
+
+However, restoration either using constant force field or gravity became extremely slow. 
+
+I thought it was collison's issue. However, even remove the orbital model, it was still much slower than I thought.
+
+The reason is likely yhe initial state of the restoration scene was the retracted and deformed tissue rather than the true initial state before retraction. This initial state caused weird deformation 
+when the posterior tissue is fixed either by RestSpringForceField or FixedProjectiveConstraint.
+
+First, reduce the posterior fixed ROI to a small region.
+
+Second, manually set up the true initial state.
+
 
