@@ -516,3 +516,12 @@ Below is the deformed tissue restoration when collision is present vs the origin
 <img width="300" alt="image" src="https://github.com/user-attachments/assets/3b1e5ca4-ab11-4505-82b8-c0f82091569a" />
 
 How to restore the tissue back to original when collision is present?
+
+Also, the tissue does not behave like fat tissue. The deformation is too coherent. Fat tissue should be more relaxed when local deformation is applied. 
+
+Next steps:
+- Using heterogeneous tissue
+- Reduce ROI size
+- Reduce or even eliminate damping
+- Increase poisson ratio for incompressibility
+- See if there are other SOFA components suppert hyperelastic or large deformation model rather than just tuning a linear elastic model for simulating fat tissue beavior (perhaps reading literatures about how fat tissue is simulated).
