@@ -499,7 +499,8 @@ Eventually the tissue bounced back by setting its mechanical model's rest_positi
     )
 ```
 However, the process is extremely slow.<br>
-<img width="300" alt="image" src="https://github.com/user-attachments/assets/54c2bfc1-e5b0-49c7-8ac0-d122eaba31cf" />
+<img width="250" alt="image" src="https://github.com/user-attachments/assets/54c2bfc1-e5b0-49c7-8ac0-d122eaba31cf" />
+<img width="250" alt="image" src="https://github.com/user-attachments/assets/f29d1a0b-3190-4983-bff3-119652d99beb" />
 
 Simplified the plate 2D model.
 
