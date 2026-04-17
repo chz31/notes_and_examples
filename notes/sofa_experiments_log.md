@@ -507,3 +507,12 @@ Simplified the plate 2D model.
 Did another test without the skull. It was faster, though not smooth. However, looks like as the first touch of the tissue model and plate was made, simulation was stopped. Adding gravity showed similar effect.<br>
 <img width="300" alt="image" src="https://github.com/user-attachments/assets/6eb74bce-a8c3-4743-b524-a67c0aff0922" />
 
+Removing the plate so no collision existed. Re-do the tissue restoration.<br>
+The tissue can return to the original condition (blue).
+<img width="300" alt="image" src="https://github.com/user-attachments/assets/f126fe92-71c2-4fa7-b84e-aa08e40337fa" /> <br>
+
+Below is the deformed tissue restoration when collision is present vs the original:<br>
+<img width="300" alt="image" src="https://github.com/user-attachments/assets/e1b1e9c9-40cc-4cdd-a07c-62538a975ba6" />
+<img width="300" alt="image" src="https://github.com/user-attachments/assets/3b1e5ca4-ab11-4505-82b8-c0f82091569a" />
+
+How to restore the tissue back to original when collision is present?
