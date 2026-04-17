@@ -2,19 +2,18 @@
 
 Create a venv with Pytorch 2.7
 ```
-create_venv mytorchvenv -t "GCC/13.2.0 OpenMPI/4.1.6 PyTorch/2.7.0 JupyterLab/4.2.0"
+create_venv monai_faster -g orbit_seg -t "GCC/13.2.0 OpenMPI/4.1.6 PyTorch/2.7.0 scikit-learn/1.4.0 scikit-image/0.24.0 SimpleITK/2.5.2 graphviz-python/0.20.1 NiBabel/5.3.2 Seaborn/0.13.2 imagecodecs/2024.6.1 YACS/0.1.8 tqdm/4.66.2 einops/0.8.0 JupyterLab/4.2.0 typing-extensions/4.10.0"
+```
+There is no need to pip install jupyter.
 
-# Change mytorchvenv to your own venv name
+Activate the venv
+```
+source activate_venv monai_faster
 ```
 
-Activate the environment
+Install monai, nnunet, and dependencies
 ```
-source activate_venv mytorchvenv
-```
-
-Install JupyterLab before using it:
-```
-pip install jupyterlab
+pip install numexpr==2.8.7 click==8.1.7 torch==2.7.0 monai fire nnunetv2 hiddenlayer
 ```
 
 Go to Interactive Apps at the FASTER portal, and open Jupyter Lab.
