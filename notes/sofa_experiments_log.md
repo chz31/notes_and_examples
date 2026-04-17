@@ -486,4 +486,23 @@ First, reduce the posterior fixed ROI to a small region.
 
 Second, manually set up the true initial state.
 
+### April 16-17
+Eventually the tissue bounced back by setting its mechanical model's rest_position as the original tedrahedral points:
+```
+    tissue.addObject(
+        "MechanicalObject",
+        template="Vec3d",
+        name="MechanicalModel",
+        position=deformed_tetra_positions,
+        rest_position = tetra_points,
+        showObject=True,
+    )
+```
+However, the process is extremely slow.<br>
+<img width="300" alt="image" src="https://github.com/user-attachments/assets/54c2bfc1-e5b0-49c7-8ac0-d122eaba31cf" />
+
+Simplified the plate 2D model.
+
+Did another test without the skull. It was faster, though not smooth. However, looks like as the first touch of the tissue model and plate was made, simulation was stopped. Adding gravity showed similar effect.<br>
+<img width="300" alt="image" src="https://github.com/user-attachments/assets/6eb74bce-a8c3-4743-b524-a67c0aff0922" />
 
