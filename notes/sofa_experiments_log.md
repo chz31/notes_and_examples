@@ -538,4 +538,22 @@ Tried all below but problems were not solved:
 
 Perhaps it is because running retraction and restoration in different scenes so the memory of the process was all lost in the restoration scene other than the initial positions.
 
+## April 20
+Changed collision models. If set to all triangle collision models, collision detection failed. If enable all collision models, local penetration became worse, suggesting redundant collision models did not make collision better but worse.
+
+Insufficiant restoration could be due to too many constraints and irregular restoration forces.
+
+Next: create an ROI to specify tissue collision region to reduce constraints. 
+
+Setting up the whole original positions as the rest state might be too aggressive. Instead, only setting up the original positions of the retracted area as the local rest position and adding restoration forces to the retraction area.
+
+First experiment: using an ROI to fix the superior part of the tissue, and add a constant force to the retracted part.
+- Disable tissue MO rest position = original point positions
+- Using an ROI to select retraction area and add a constant force
+- Increase force to -100000
+- Tissue deformed and fully dropped unto the plate without visible signifcan penetration.
+- However, deformation looks unrealistic<br>
+
+<img width="250" halt="image" src="https://github.com/user-attachments/assets/034e76ae-b496-4569-b850-d1293074aea7" />
+
 
