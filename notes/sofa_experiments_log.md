@@ -551,7 +551,7 @@ First experiment: using an ROI to fix the superior part of the tissue, and add a
 - Disable tissue MO rest position = original point positions
 - Using an ROI to select retraction area and add a constant force
 - Increase force to -100000
-- Tissue deformed and fully dropped unto the plate without visible signifcan penetration.
+- Tissue deformed and fully dropped unto the plate without visible signifcan penetration. Some local penetration still occured.
 - However, deformation looks unrealistic<br>
 
 <img width="250" halt="image" src="https://github.com/user-attachments/assets/034e76ae-b496-4569-b850-d1293074aea7" />
