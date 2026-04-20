@@ -525,3 +525,17 @@ Next steps:
 - Reduce or even eliminate damping
 - Increase poisson ratio for incompressibility
 - See if there are other SOFA components suppert hyperelastic or large deformation model rather than just tuning a linear elastic model for simulating fat tissue beavior (perhaps reading literatures about how fat tissue is simulated).
+
+## April 19
+Tried all below but problems were not solved:
+- Heterogeneous tissue
+- Smaller fixation ROI
+- Reduced damping
+- Increased Poisson ratio
+- Penalty contact
+- Weaker fixation
+- Added gravity
+
+Perhaps it is because running retraction and restoration in different scenes so the memory of the process was all lost in the restoration scene other than the initial positions.
+
+
