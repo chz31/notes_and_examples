@@ -557,3 +557,69 @@ First experiment: using an ROI to fix the superior part of the tissue, and add a
 <img width="250" halt="image" src="https://github.com/user-attachments/assets/034e76ae-b496-4569-b850-d1293074aea7" />
 
 
+## April 21
+Task 1: add a restoration ROI at the anterior tissue, then add a constant force field to pull the tissue down; with or without gravity
+- Add or not add original tissue as rest state
+- Additionally, add a plate to slowly move downward to reduce sudden dropping of tissue (Looked like the tissue was able to move closer to the plate when added this, though simulation slower)
+- Try the simple heterogeneous model for the same workflow
+
+Looked like to make the anterior tissue continue deform toward the plate after posterior region fully contacted the plate, a large constant force had to be added. To make it work, the only way is to fix the upper part of the tissue using FixedProjectiveConstraint. Otherwise, dx per dt will easily exceed the contact distance. 
+
+Compute safe distance for dx < contact distance when applying a constant force with a given dt.
+```
+a = F / m; F = force on one node, and m = mass of one node
+dx ≈ 1/2 * a * dt^2
+   = 1/2 * (F/m) * dt^2
+1/2 * (F/m) * dt^2 < d_safe
+Which gives:
+F < 2 * m * d_safe / dt^2
+
+If ConstantForceField uses totalForce, the force is distributed over N selected nodes, then:
+F_node ≈ F_total / N
+F_total / N < 2 * m_node * d_safe / dt^2
+or:
+F_total < N * 2 * m_node * d_safe / dt^2
+where m_node ≈ TOTAL_MASS / total_number_of_tetra_nodes
+```
+
+```
+mo = sim.tissue.getObject("MechanicalModel")
+roi = sim.tissue.getObject("ConstForcePoints")
+
+n_total = len(mo.position.array())
+n_roi = len(roi.indices.array())
+
+print("total nodes:", n_total)
+print("ROI nodes:", n_roi)
+print("avg node mass:", 0.1 / n_total)
+
+m_node = 0.1 / n_total
+dt = 0.01
+contact_distance = 0.05
+d_safe = 0.25 * contact_distance
+
+f_node_safe = 2 * m_node * d_safe / (dt ** 2)
+f_total_safe = f_node_safe * n_roi
+
+print("safe per-node force ~", f_node_safe)
+print("safe total force ~", f_total_safe)
+```
+
+On the other hand, a smaller dt could be used to make dx much smaller to accomodate for large force.
+
+In that case, if F increases 100 times, dt should drop to 10 times smaller to maintain dx.
+
+Plane motion should also increase 10 times to accomodate for small dt.
+
+**results**
+- Adding initial positions as rest positions and using homogeneous model: with or without fixed the upper tissue, anterior tissue region can both be pulled closer to the plate with a large constant force. However, without fixed the upper tissue, a smaller dt has to be added to compensate for the large force to avoid `dx > contact distance`. Also, when the upper tissue is not fixed vs deformation, there will be somewaht different deformation (of course). It looks like the fixed one (red) showed less changes because, when tissue is unfixed (blue), it has more freedom to move around within the orbit.<br>
+<img width="250" alt="image" src="https://github.com/user-attachments/assets/ba4cb601-8a61-4f08-b74c-3f78d22a4968" />
+<img width="250" alt="image" src="https://github.com/user-attachments/assets/794fdc33-5ffa-4783-8c9c-2c813276f093" />
+
+
+Task 2: create a multi-material model with multiple tissue types to try the workflow
+
+Task 3: inquire Paul about tissue restoration problem
+
+
+
