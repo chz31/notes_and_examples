@@ -582,6 +582,7 @@ F_total < N * 2 * m_node * d_safe / dt^2
 where m_node ≈ TOTAL_MASS / total_number_of_tetra_nodes
 ```
 
+Script for extracting "safe force" given dt and contact distance
 ```
 mo = sim.tissue.getObject("MechanicalModel")
 roi = sim.tissue.getObject("ConstForcePoints")
@@ -612,10 +613,12 @@ In that case, if F increases 100 times, dt should drop to 10 times smaller to ma
 Plane motion should also increase 10 times to accomodate for small dt.
 
 **results**
-- Adding initial positions as rest positions and using homogeneous model: with or without fixed the upper tissue, anterior tissue region can both be pulled closer to the plate with a large constant force. However, without fixed the upper tissue, a smaller dt has to be added to compensate for the large force to avoid `dx > contact distance`. Also, when the upper tissue is not fixed vs deformation, there will be somewaht different deformation (of course). It looks like the fixed one (red) showed less changes because, when tissue is unfixed (blue), it has more freedom to move around within the orbit.<br>
+- Adding initial positions as rest positions and using homogeneous model: with or without fixed the upper tissue, anterior tissue region can both be pulled closer to the plate with a large constant force. However, without fixed the upper tissue, a smaller dt has to be added to compensate for the large force to avoid `dx > contact distance`. Also, when the upper tissue is not fixed vs deformation, there will be somewaht different deformation (of course). It looks like the fixed one (red) showed less changes because, when tissue is unfixed (blue transparent), it has more freedom to move around within the orbit.<br>
 <img width="250" alt="image" src="https://github.com/user-attachments/assets/ba4cb601-8a61-4f08-b74c-3f78d22a4968" />
 <img width="250" alt="image" src="https://github.com/user-attachments/assets/794fdc33-5ffa-4783-8c9c-2c813276f093" />
 
+- Heterogeneous model will require a higher force to restore it. This is a problem. Furthermore, it is better to start with a retracted heterogeneous rather than homogeneous mesh for the retraction scene.
+- Inferior rectus needs to be corrected to reduce its size or it may occupy the entire space inferior to the orbit.
 
 Task 2: create a multi-material model with multiple tissue types to try the workflow
 
