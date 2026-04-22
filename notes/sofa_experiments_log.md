@@ -625,4 +625,7 @@ Task 2: create a multi-material model with multiple tissue types to try the work
 Task 3: inquire Paul about tissue restoration problem
 
 
+## April 22
+Task: Prepare a demo SOFA scene for Paul to debug
+
 
