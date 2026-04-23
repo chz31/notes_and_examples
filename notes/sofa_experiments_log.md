@@ -628,4 +628,7 @@ Task 3: inquire Paul about tissue restoration problem
 ## April 22
 Task: Prepare a demo SOFA scene for Paul to debug
 
+## April 23
+Sent the demo scenes to Paul to debug.
 
+Install SOFA on Mach.
