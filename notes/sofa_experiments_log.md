@@ -632,3 +632,11 @@ Task: Prepare a demo SOFA scene for Paul to debug
 Sent the demo scenes to Paul to debug.
 
 Install SOFA on Mach.
+
+Mesh preparation for specimen 1224
+- Skull editing:remove bones at fracture site
+- Combine all tissue segments at fx side into one
+- Use nnInteractive or other tools to re-segment inferior rectus
+- Or simply do not include inferior rectus in MeshROI select
+
+
