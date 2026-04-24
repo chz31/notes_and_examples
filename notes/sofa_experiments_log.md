@@ -639,4 +639,10 @@ Mesh preparation for specimen 1224
 - Use nnInteractive or other tools to re-segment inferior rectus
 - Or simply do not include inferior rectus in MeshROI select
 
-
+## April 24
+Mesh preparation
+1. Use nninteractive to make a complete orbit other than the fractured side
+2. Subtract the orbit from the tissue model. Clean the fx bones.
+3. Clone and expand skull by 0.8 mm or at least 2 pixels.
+4. Subtract the tissue model from
+5. Run a 0.5 kernel smoothing
