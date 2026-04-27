@@ -659,7 +659,7 @@ At 1.58 sec, simulation basically stopped at the screenshot below. No more retra
 <img width="250" alt="Screenshot from 2026-04-27 13-39-54" src="https://github.com/user-attachments/assets/add34848-4573-4041-bb3b-43b51aa7df5a" />
 <img width="250" alt="Screenshot from 2026-04-27 13-40-07" src="https://github.com/user-attachments/assets/31daeab7-e497-4591-8508-3fb569fda529" />
 
-At about 1.74 sec, there is a bit collision defect appeared at the protruded region:
+At about 1.74 sec, there is a bit collision defect appeared at the protruded region:<br>
 <img width="200" alt="image" src="https://github.com/user-attachments/assets/2d657cd8-41e2-4a85-acdc-1cd1cc42d84a" />
 
 Need to experiment a much smaller posterior fixed roi.
