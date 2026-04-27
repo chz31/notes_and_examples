@@ -643,6 +643,19 @@ Mesh preparation for specimen 1224
 Mesh preparation
 1. Use nninteractive to make a complete orbit other than the fractured side
 2. Subtract the orbit from the tissue model. Clean the fx bones.
-3. Clone and expand skull by 0.8 mm or at least 2 pixels.
+3. Clone and expand skull by 0.8 mm.
 4. Subtract the tissue model from
-5. Run a 0.5 kernel smoothing
+5. Run a 3x3 kernel smoothing
+
+## April 25
+Tet number: about 9,000
+Skull: about 5,000 points
+
+Simulation very slow. After 1.5 sec, frame rate dropped to 0.1 sec This could be caused by collision at the protruded herniated region
+
+<img width="250" alt="Screenshot from 2026-04-27 13-39-54" src="https://github.com/user-attachments/assets/add34848-4573-4041-bb3b-43b51aa7df5a" />
+<img width="250" alt="Screenshot from 2026-04-27 13-40-07" src="https://github.com/user-attachments/assets/31daeab7-e497-4591-8508-3fb569fda529" />
+
+Need to experiment by using more aggressive local smoothing or even removing that herniated region.
+
+
