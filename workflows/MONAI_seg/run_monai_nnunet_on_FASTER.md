@@ -19,4 +19,5 @@ cd /scratch/group/orbit_seg/data/orbit_data
 
 Run Monai commands
 
+Currently working set up: >= 12 CPU cores and >= 200 GB RAM
 
