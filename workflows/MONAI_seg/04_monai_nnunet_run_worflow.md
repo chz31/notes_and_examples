@@ -60,9 +60,9 @@ Wait until the process finishes. It may take a while.
 After this step, if your raw data does not change and if you set `nnunet_results` directory differently from the directory of converted data in input.ymal, you can reuse these converted data and model configurations.
 
 ### 4. Train a model
-[Optional]A quick smoke test that run 5 epochs to train a single `3d_fullres` model for a single folder.
-```
+[Optional]A quick smoke test that run 5 epochs to train a single `3d_fullres` model for a single folder.<br>
 [component] use all available GPU(s) to train a single model for 5 epochs.
+```
 python -m monai.apps.nnunet nnUNetV2Runner train_single_model --input_config "./input.yaml" \
     --config "3d_fullres" \
     --fold 0 \
