@@ -651,7 +651,9 @@ Mesh preparation
 Tet number: about 9,000
 Skull: about 5,000 points
 
-Simulation very slow. After 1.5 sec, frame rate dropped to 0.1 sec This could be caused by collision at the protruded herniated region
+Simulation very slow. After 1.5 sec, frame rate dropped to 0.1 sec This could be caused by collision at the protruded herniated region.
+
+At 1.58 sec, simulation basically stopped at the screenshot below.
 
 <img width="250" alt="Screenshot from 2026-04-27 13-39-54" src="https://github.com/user-attachments/assets/add34848-4573-4041-bb3b-43b51aa7df5a" />
 <img width="250" alt="Screenshot from 2026-04-27 13-40-07" src="https://github.com/user-attachments/assets/31daeab7-e497-4591-8508-3fb569fda529" />
