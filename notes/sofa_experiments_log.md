@@ -666,4 +666,13 @@ Need to experiment a much smaller posterior fixed roi.
 
 Need to experiment by using more aggressive local smoothing or even removing that herniated region.
 
+# April 27-28
+
+The distinct protruded herniated region may be the reason that cause simulation to stuck without creating sufficient gap for homogeneous model.
+
+Next time:
+- Create separate retraction, one for push the protrusion into the tissue using a smaller, smoother plane, and another for pushing the entire tissue
+- Or simply remove any distinct protruded area see how things work. As the fracture occur, the fat tissue's overall volume enlarged, so removing a local protruded area may not hurt that much for outcome prediction.
+
+Built a stacked MeshROI heterogeneous mesh. I suspect that the simulation would be super slow.
 
