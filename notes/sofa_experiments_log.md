@@ -677,7 +677,7 @@ Next time:
 Built a stacked MeshROI heterogeneous mesh. I suspect that the simulation would be super slow.
 
 ## April 29
-The heterogeneous mesh from CT_brain with multiple MeshROI and Young's modulus values can be simulated in the retractio scene, though much   slower.
+The heterogeneous mesh from CT_brain with multiple MeshROI and Young's modulus values can be simulated in the retractio scene, though much slower.
 
 Next, try use IndexValueWrapper to wrap poission ratio values and see if they can be correctly passed to the tetrahedron force field
 
@@ -688,6 +688,6 @@ The internal tetrahedra size appeared to be too large:<br>
 
 Redo the meshing by adding `cell_size` parameter to the cgal command to re-do the meshing.This parameter did not work.
 
-Default gmsh way actually produced much finer internal tetrahedra, though reported 65 ill-shaped out of 15440 tetrahedra as a warning information but no error.<br>
+Default gmsh way actually produced much finer internal tetrahedra, though reported 65 ill-shaped out of 150k tetrahedra as a warning information but no error.However, this mesh is simply too dense to run any simulation <br>
 <img width="300" alt="image" src="https://github.com/user-attachments/assets/57715a18-3c57-42e7-83fa-0d03e1cd29f0" />
 
