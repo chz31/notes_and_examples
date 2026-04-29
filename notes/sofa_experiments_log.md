@@ -666,7 +666,7 @@ Need to experiment a much smaller posterior fixed roi.
 
 Need to experiment by using more aggressive local smoothing or even removing that herniated region.
 
-# April 27-28
+## April 27-28
 
 The distinct protruded herniated region may be the reason that cause simulation to stuck without creating sufficient gap for homogeneous model.
 
@@ -676,3 +676,9 @@ Next time:
 
 Built a stacked MeshROI heterogeneous mesh. I suspect that the simulation would be super slow.
 
+## April 29
+The heterogeneous mesh from CT_brain with multiple MeshROI and Young's modulus values can be simulated in the retractio scene, though much   slower.
+
+Next, try use IndexValueWrapper to wrap poission ratio values and see if they can be correctly passed to the tetrahedron force field
+
+Try to design >=2 rounds of retraction to fully retract the tissue in seperate scenes
