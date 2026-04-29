@@ -682,3 +682,8 @@ The heterogeneous mesh from CT_brain with multiple MeshROI and Young's modulus v
 Next, try use IndexValueWrapper to wrap poission ratio values and see if they can be correctly passed to the tetrahedron force field
 
 Try to design >=2 rounds of retraction to fully retract the tissue in seperate scenes
+
+The internal tetrahedra size appeared to be too large:<br>
+<img width="250" alt="image" src="https://github.com/user-attachments/assets/36b93f11-bcba-4cc4-a4de-a5be21c98fc9" />
+
+Redo the meshing by adding `cell_size` parameter to the cgal command to re-do the meshing.
