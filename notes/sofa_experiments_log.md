@@ -686,4 +686,8 @@ Try to design >=2 rounds of retraction to fully retract the tissue in seperate s
 The internal tetrahedra size appeared to be too large:<br>
 <img width="250" alt="image" src="https://github.com/user-attachments/assets/36b93f11-bcba-4cc4-a4de-a5be21c98fc9" />
 
-Redo the meshing by adding `cell_size` parameter to the cgal command to re-do the meshing.
+Redo the meshing by adding `cell_size` parameter to the cgal command to re-do the meshing.This parameter did not work.
+
+Default gmsh way actually produced much finer internal tetrahedra, though reported 65 ill-shaped out of 15440 tetrahedra as a warning information but no error.<br>
+<img width="300" alt="image" src="https://github.com/user-attachments/assets/57715a18-3c57-42e7-83fa-0d03e1cd29f0" />
+
