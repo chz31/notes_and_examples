@@ -22,7 +22,7 @@ Run Monai commands
 Currently working set up: >= 12 CPU cores and >= 200 GB RAM
 
 
-## Submit a batch job
+## Submit a batch job on FASTER
 Open FASTER Shell
 ```
 cd /path/to/slurm/batch/file
