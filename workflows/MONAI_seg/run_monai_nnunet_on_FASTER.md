@@ -60,3 +60,22 @@ In FASTER shell, submit the job:
 ```
 sbatch train_monai_nnunet_5epochs.slurm
 ```
+
+It'll print out the job ID:
+```
+Submitted batch job 3002250
+(from job_submit) your job will be charged from the following
+              Project Account: 142727337295
+              Account Balance: 88600.903333
+              Requested SUs (CPU and GPU):   1098.0
+```
+
+
+Check job status
+```
+# Check by user name
+squeue -u user_name #e.g., squeue -u chi.zhang
+
+# Check by job ID; job id printed out after submission
+squeue --job job_id
+```
