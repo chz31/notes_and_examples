@@ -21,3 +21,42 @@ Run Monai commands
 
 Currently working set up: >= 12 CPU cores and >= 200 GB RAM
 
+
+## Submit a batch job
+Open FASTER Shell
+```
+cd /path/to/slurm/batch/file
+```
+[Sumbit a batch job tutorial]()
+
+Here is a slurm file recently sent for testing 'train_monai_nnunet_5epochs.slurm'
+```
+#!/bin/bash
+#SBATCH --job-name=orbit_nnunet_5ep
+#SBATCH --time=06:00:00
+#SBATCH --nodes=1
+#SBATCH --ntasks=1
+#SBATCH --cpus-per-task=12
+#SBATCH --mem=200G
+#SBATCH --partition=gpu
+#SBATCH --gres=gpu:a100:1
+#SBATCH --output=orbit_nnunet_5ep.%j.out
+#SBATCH --error=orbit_nnunet_5ep.%j.err
+#SBATCH --mail-type=ALL
+
+source activate_venv monai_faster
+
+cd /scratch/group/orbit_seg/data/orbit_data || exit 1
+
+python -m monai.apps.nnunet nnUNetV2Runner train_single_model \
+    --input_config "./input.yaml" \
+    --config "3d_fullres" \
+    --fold 0 \
+    --trainer_class_name "nnUNetTrainer_5epochs"
+
+```
+
+In FASTER shell, submit the job:
+```
+sbatch train_monai_nnunet_5epochs.slurm
+```
