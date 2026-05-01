@@ -19,6 +19,13 @@ cd /scratch/group/orbit_seg/data/orbit_data
 
 Run Monai commands
 
+```
+python -m monai.apps.nnunet nnUNetV2Runner train_single_model --input_config "./input.yaml" \
+    --config "3d_fullres" \
+    --fold 0 \
+    --trainer_class_name "nnUNetTrainer_5epochs"
+```
+
 Currently working set up: >= 12 CPU cores and >= 200 GB RAM
 
 
