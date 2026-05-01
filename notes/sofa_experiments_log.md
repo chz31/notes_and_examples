@@ -691,3 +691,26 @@ Redo the meshing by adding `cell_size` parameter to the cgal command to re-do th
 Default gmsh way actually produced much finer internal tetrahedra, though reported 65 ill-shaped out of 150k tetrahedra as a warning information but no error.However, this mesh is simply too dense to run any simulation <br>
 <img width="300" alt="image" src="https://github.com/user-attachments/assets/57715a18-3c57-42e7-83fa-0d03e1cd29f0" />
 
+## April 30
+gmsh gui settings:<br>
+- Element size factor 4
+- Min/Max element size 2/5
+- Unchek Compute element sizes using points values
+- Extend element sizes from boundary
+
+Overall produced around 58k elements, but the internal elements still very coarse. External ones not very uniform because it seems to use the original triangles to do the meshing.
+
+Uniform remesh the surface model into about 2,000 points. Subdivision set up as 1, so each triangle is divided into 4 first. This improves uniformity of triangles.
+
+In gmsh, Element size factor 1 or 1.5 both yielded around 2,000 tetrahedra. The internal tetrahedra appeared to be more uniform.<br>
+<img width="300" alt="image" src="https://github.com/user-attachments/assets/ccae59ac-78b9-46fa-8756-e41a236790a8" />
+
+Need a helper function to show the element size range and set up a threshold to ensure relevant size consistency.
+
+It is better to assign regional densities of elements. For example, the globe can have lower density as it is stiffer.
+
+Run gmsh using its Python API.
+
+
+## May 1
+Next week's goal: learn to use gmsh to control mesh density and quality through API, check mesh quality; aiming at creating meshes with 10k points for >=2 specimens.
