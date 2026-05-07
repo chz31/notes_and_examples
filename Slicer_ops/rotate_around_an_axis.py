@@ -10,6 +10,9 @@
 
 # Then run the script below, go to Transforms module, select rotationTransformNode, and move Edit / Rotation / IS slider.
 
+# The final transform node record everything. However, when the final transform is synced with the rotation transform, 
+# if the final transform is changed by itself and then doing the IS rotation again, the new final transform changes will be cancelled. 
+# Therefore, it is better to exit the syncing, then change the final transform.
 
 import numpy as np
 
@@ -18,7 +21,7 @@ rotationAxisMarkupsNode = getNode("A_P_axis")
 # This transform can be edited in Transforms module (Edit / Rotation / IS slider)
 rotationTransformNode = getNode("rotation_transform")
 # This transform has to be applied to the image, model, etc.
-finalTransformNode = getNode("final_transform")
+finalTransformNode = getNode("interaction_transform")
 
 def updateFinalTransform(unusedArg1=None, unusedArg2=None, unusedArg3=None):
   import numpy as np
