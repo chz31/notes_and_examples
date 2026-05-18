@@ -1,0 +1,83 @@
+Install Pixi
+```
+curl -fsSL https://pixi.sh/install.sh | sh
+source ~/.bashrc
+
+pixi --version
+```
+
+Create a clean pixi project
+```
+mkdir -p ~/monai-nnunet-pixi
+cd ~/monai-nnunet-pixi
+
+pixi init
+pixi add python=3.12 pip
+```
+
+Enter pixi environment
+```
+pixi shell
+```
+
+Verify Python & Pip are coming from pixi
+```
+which python
+python --version
+which pip
+```
+Expect to see path like `~/monai-nnunet-pixi/.pixi/envs/default/bin/`
+
+Check gpu
+```
+nvidia-smi
+```
+
+Install pytorch
+```
+python -m pip install \
+  torch==2.7.0 \
+  torchvision==0.22.0 \
+  torchaudio==2.7.0 \
+  --index-url https://download.pytorch.org/whl/cu126
+```
+
+Verify torch & cuda
+```
+python - <<'EOF'
+import torch
+print("torch:", torch.__version__)
+print("cuda available:", torch.cuda.is_available())
+print("torch cuda:", torch.version.cuda)
+if torch.cuda.is_available():
+    print("gpu:", torch.cuda.get_device_name(0))
+EOF
+```
+
+Install monai & nnunet
+```
+python -m pip install monai
+python -m pip install nnunetv2
+```
+
+Install dependencies
+```
+python -m pip install nibabel SimpleITK scikit-image pandas matplotlib tensorboard tqdm
+```
+
+Leave pixi environment
+```
+exit
+```
+
+Reenter the environment
+```
+cd ~/monai-nnunet-pixi
+pixi shell
+```
+
+If not entering the shell, direct using 'pixi run python' to run python apps. For example:
+```
+pixi run python -m monai.apps.nnunet nnUNetV2Runner --help
+```
+
