@@ -8,8 +8,8 @@ pixi --version
 
 Create a clean pixi project
 ```
-mkdir -p ~/monai-nnunet-pixi
-cd ~/monai-nnunet-pixi
+mkdir -p ~/monai_nnunet_pixi
+cd ~/monai_nnunet_pixi
 
 pixi init
 pixi add python=3.12 pip
@@ -26,7 +26,7 @@ which python
 python --version
 which pip
 ```
-Expect to see path like `~/monai-nnunet-pixi/.pixi/envs/default/bin/`
+Expect to see path like `~/monai_nnunet_pixi/.pixi/envs/default/bin/`
 
 Check gpu
 ```
@@ -72,7 +72,7 @@ exit
 
 Reenter the environment
 ```
-cd ~/monai-nnunet-pixi
+cd ~/monai_nnunet_pixi
 pixi shell
 ```
 
