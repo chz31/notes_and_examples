@@ -69,6 +69,35 @@ python -m monai.apps.nnunet nnUNetV2Runner train_single_model --input_config "./
     --trainer_class_name "nnUNetTrainer_5epochs"
 ```
 
+### If no sufficient RAM for preprocessing
+Try limit the number of workers. The default is (8,8,8). Starting with one worker per process
+```
+python -m monai.apps.nnunet nnUNetV2Runner plan_and_process \
+  --input_config "./input.yaml" \
+  --npfp 1 \
+  --n_proc "(1,1,1)" \
+  --verbose True
+```
+
+Or perhaps try 3d_fullres only (not sure if it'll work)
+```
+python -m monai.apps.nnunet nnUNetV2Runner plan_and_process \
+  --input_config "./input.yaml" \
+  --c "('3d_fullres',)" \
+  --npfp 1 \
+  --n_proc "(1,)" \
+  --verbose True
+```
+
+Then gradually increase workers, such as:
+```
+(1,1,1)
+(2,2,1)
+(4,2,1)
+(4,4,2)
+(8,8,8)
+```
+
 
 **Use all available GPU(s) to train five models under the 3d_fullres configuration** <br>
 '3d_fullres' configuration should be sufficient for the 3D segmentation model training. By default, monai-nnunet will train five different models with cross-validation (i.e., each time, it will randomly pick up some cases as validating dataset without being included in the training process). 
