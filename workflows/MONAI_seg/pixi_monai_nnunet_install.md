@@ -65,6 +65,34 @@ Install dependencies
 python -m pip install nibabel SimpleITK scikit-image pandas matplotlib tensorboard tqdm
 ```
 
+Check if nnunetv2 change torch version
+```
+python - <<'EOF'
+import torch, torchvision, torchaudio
+print("torch:", torch.__version__)
+print("torchvision:", torchvision.__version__)
+print("torchaudio:", torchaudio.__version__)
+print("cuda available:", torch.cuda.is_available())
+print("torch cuda:", torch.version.cuda)
+if torch.cuda.is_available():
+    print("gpu:", torch.cuda.get_device_name(0))
+EOF
+```
+Expected output
+```
+torch: 2.7.1+cu126
+torchvision: 0.22.1+cu126
+torchaudio: 2.7.1+cu126
+cuda available: True
+torch cuda: 12.6
+```
+
+Also check:
+```
+python -m pip check
+```
+Expect to see `No broken requirements found.`
+
 Leave pixi environment
 ```
 exit
