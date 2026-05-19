@@ -92,7 +92,7 @@ python -m monai.apps.nnunet nnUNetV2Runner plan_and_process \
 Then gradually increase workers, such as:
 ```
 (1,1,1)
-(2,2,1)
+(2,2,1) #this settings works with 48GB RAM.
 (4,2,1)
 (4,4,2)
 (8,8,8)
