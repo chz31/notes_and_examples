@@ -1,0 +1,15 @@
+Update build dependencies
+```
+sudo apt update
+sudo apt install -y build-essential
+```
+
+Monitor gpu usage
+```
+watch -n 2 nvidia-smi
+```
+
+Monitor cpu/ram
+```
+htop
+```
