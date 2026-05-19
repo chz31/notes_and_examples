@@ -30,3 +30,17 @@ Reopen WSL, and check the memory:
 ```
 free -h
 ```
+
+Install necessary dependencies including g++
+```
+sudo apt update
+sudo apt install -y build-essential
+```
+
+Check installation
+```
+which gcc
+gcc --version
+which g++
+g++ --version
+```
