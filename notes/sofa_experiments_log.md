@@ -727,8 +727,22 @@ Retracting fx case was really slow likely due to more irregular inferior surface
 
 Experiments to try to decrease:<br>
 1. Staged retraction scenes: use a much smaller plane to retract the isolated herniation first, then do a global retraction.
-2. Simplify the collision model of the skull
-3. Try to decrease the threshold and iteration number of BlockGaussSeidelConstraintSolver
-4. Try triangular TriangularFEMForceFieldOptim and FastTetrahedralCorotationalForceField
+2. Simplify the collision model of the skull (Done)
+3. Try to decrease the threshold and iteration number of BlockGaussSeidelConstraintSolver: `tolerance="1e-3", maxIterations="100"` or even `1e-2/50`.
+4. Try triangular TriangularFEMForceFieldOptim and FastTetrahedralCorotationalForceField (Done; failure)
+5. Try smaller DT, alarm distance, and contact distance.
+```
+DT = 0.002
+ALARM_DISTANCE = 0.2
+CONTACT_DISTANCE = 0.02
+```
+
+Tried `FastTetrahedralCorotationalForceField`. Mesh exploded when animation started. Could be due to RestSpringForceField.
+
+`TetrahedronHyperelasticityFEMForceField` showed similar effect.
+
+Switched to `FixedProjectiveConstrant` did not solve the problem.
+
+The likely culprit is contact-driven inversion: the tool lifts/compresses tissue against the rigid orbit, some local tets flatten or invert, and the corotational/hyperelastic models eventually produce huge forces or invalid stiffness. Hyperelastic delaying the failure fits that story.
 
 Restoration improvement: look for methods that enable fat tissue to behave more like fat tissue. 
