@@ -714,3 +714,21 @@ Run gmsh using its Python API.
 
 ## May 1
 Next week's goal: learn to use gmsh to control mesh density and quality through API, check mesh quality; aiming at creating meshes with 10k points for >=2 specimens.
+
+## May 1-25
+Used gmsh python script to create meshes for CT Brain & a fx case with around 10k tets.
+
+Enable extending the boundary interiorly in gmsh setting important to ensure more uniform mesh size rather than extremely coarse sizes interior to the mesh.
+
+Ultimately, mesh size is relevant to the point density at least for now. Aim at 1.2-1.5k points for the surface model.
+
+## May 25
+Retracting fx case was really slow likely due to more irregular inferior surface and localized fat herniation.
+
+Experiments to try to decrease:<br>
+1. Staged retraction scenes: use a much smaller plane to retract the isolated herniation first, then do a global retraction.
+2. Simplify the collision model of the skull
+3. Try to decrease the threshold and iteration number of BlockGaussSeidelConstraintSolver
+4. Try triangular TriangularFEMForceFieldOptim and FastTetrahedralCorotationalForceField
+
+Restoration improvement: look for methods that enable fat tissue to behave more like fat tissue. 
