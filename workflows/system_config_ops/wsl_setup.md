@@ -44,3 +44,13 @@ gcc --version
 which g++
 g++ --version
 ```
+
+Return to `/home/your_user_name/` in the terminal 
+```
+cd ~
+```
+
+Go to `C:Users` in Windows
+```
+cd c /mnt/c/Users/your_user_name/
+```
