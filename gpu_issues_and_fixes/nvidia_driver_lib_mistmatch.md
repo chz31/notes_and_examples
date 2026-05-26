@@ -35,6 +35,8 @@ ii  libnvidia-decode-580:i386                  580.159.0
 modinfo nvidia:              580.159.03
 installed packages:          580.159.03
 NVML library:                580.159
+
+# Linux had the newer NVIDIA module installed on disk, but during boot it loaded the older 580.142 module, likely from stale initramfs contents or stale boot/module metadata.
 ```
 
 ## Lightweight fix
