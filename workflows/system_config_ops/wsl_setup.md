@@ -65,5 +65,19 @@ cp -r /mnt/c/Users/chi.zhang/Documents/myfolder ~/target/
 
 # example
 cp -r /mnt/c/Users/chi.zhang/Downloads/SOFA_v25.12.99-full_Linux/SOFA_v25.12.99_Linux ~/sofa/
-
 ```
+
+## Issues
+
+Missing libgl libraries when trying to load `pygmsh` in python in a pixi env
+```
+OSError: libGLU.so.1: cannot open shared object file: No such file or directory
+OSError: libXft.so.2: cannot open shared object file: No such file or directory
+```
+Solution:
+```
+sudo apt update
+sudo apt install -y libglu1-mesa
+sudo apt install -y libxft2 libxrender1 libx11-6 libxext6 fontconfig
+```
+
