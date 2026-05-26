@@ -86,6 +86,17 @@ export PYTHONPATH="$SOFA_ROOT/plugins/SofaPython3/lib/python3/site-packages:$PYT
 "$SOFA_ROOT/bin/runSofa-25.12.99" -l SofaPython3 -g imgui "$@"
 ```
 
+If no generic py3.12, the bash file should add LD_LIBRARY_PATH
+```
+#!/usr/bin/env bash
+
+export SOFA_ROOT="$HOME/sofa/SOFA_v25.12.99_Linux"
+export LD_LIBRARY_PATH="$PIXI_PROJECT_ROOT/.pixi/envs/default/lib:$SOFA_ROOT/lib:$LD_LIBRARY_PATH"
+export PYTHONPATH="$SOFA_ROOT/plugins/SofaPython3/lib/python3/site-packages:$PYTHONPATH"
+
+"$SOFA_ROOT/bin/runSofa-25.12.99" -l SofaPython3 -g imgui "$@"
+```
+
 If `~/bin` is not on the path, it can be manually added:
 ```
 echo 'export PATH="$HOME/bin:$PATH"' >> ~/.bashrc
@@ -110,12 +121,16 @@ nano ~/envs/sofa_scripts/runsofa2512
 Then run explicitly:
 ```
 ~/envs/sofa_scripts/runsofa2512 /path/to/scene.py
+
+#For, example
+~/envs/sofa_scripts/runsofa2512 /mnt/c/Users/chi.zhang/Documents/chi_vs_workspace/slicersofa_sofa_scratches/sofa_experiments/sofa_retraction_scene_debug.py
 ```
 In this case, no need to run `chmod -x`
 
-If needed to do `chmod -x`
+If permission denied (no need to add to the path):
 ```
 chmod +x ~/envs/sofa_scripts/runsofa2512
 ~/envs/sofa_scripts/runsofa2512 /path/to/scene.py
+
 ```
 
