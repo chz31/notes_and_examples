@@ -13,3 +13,12 @@ Monitor cpu/ram
 ```
 htop
 ```
+
+copy and paste a file
+```
+# copy a file
+cp /path/to/dir/example.txt /target_path/
+
+# copy a folder
+cp -r /path/to/dir/myfolder /target_path/
+```
