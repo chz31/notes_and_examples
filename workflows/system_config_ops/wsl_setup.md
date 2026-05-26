@@ -54,3 +54,16 @@ Go to `C:Users` in Windows
 ```
 cd c /mnt/c/Users/your_user_name/
 ```
+
+copy-paste between Windowsn & WSL
+```
+# copy a file
+cp /mnt/c/Users/chi.zhang/Documents/example.txt ~/target/
+
+# copy a folder
+cp -r /mnt/c/Users/chi.zhang/Documents/myfolder ~/target/
+
+# example
+cp -r /mnt/c/Users/chi.zhang/Downloads/SOFA_v25.12.99-full_Linux/SOFA_v25.12.99_Linux ~/sofa/
+
+```
