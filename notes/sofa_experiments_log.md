@@ -726,11 +726,12 @@ Ultimately, mesh size is relevant to the point density at least for now. Aim at 
 Retracting fx case was really slow likely due to more irregular inferior surface and localized fat herniation.
 
 Experiments to try to decrease:<br>
-1. Staged retraction scenes: use a much smaller plane to retract the isolated herniation first, then do a global retraction.
+1. Staged retraction scenes: use a much smaller plane to retract the isolated herniation first, then do a global retraction. (Done)
 2. Simplify the collision model of the skull (Done)
-3. Try to decrease the threshold and iteration number of BlockGaussSeidelConstraintSolver: `tolerance="1e-3", maxIterations="100"` or even `1e-2/50`.
-4. Try triangular TriangularFEMForceFieldOptim and FastTetrahedralCorotationalForceField (Done; failure)
-5. Try smaller DT, alarm distance, and contact distance.
+3. Try to decrease the threshold and iteration number of BlockGaussSeidelConstraintSolver: `tolerance="1e-3", maxIterations="100"` or even `1e-2/50`. (Done: faster; no apparent severe penetration).
+5. Try triangular TriangularFEMForceFieldOptim and FastTetrahedra (DlCorotationalForceField (Done and failed; mesh exploded)
+6. Try smaller DT, alarm distance, and contact distance. (Done wiht lower BlockGaussSeidelConstraintSolver values & mu = 0.0/0.1; penetration well observed).
+7. Set mu = 0.0 for FrictionContactConstraint. (Done: much faster after setting lower values for the BlockGaussSeidelConstraintSolver. **Collision visually worse at the local herniated region, but still worth trying for a staged local retraction or used at the global retraction stage after local retraction**).
 ```
 DT = 0.002
 ALARM_DISTANCE = 0.2
@@ -745,4 +746,98 @@ Switched to `FixedProjectiveConstrant` did not solve the problem.
 
 The likely culprit is contact-driven inversion: the tool lifts/compresses tissue against the rigid orbit, some local tets flatten or invert, and the corotational/hyperelastic models eventually produce huge forces or invalid stiffness. Hyperelastic delaying the failure fits that story.
 
-Restoration improvement: look for methods that enable fat tissue to behave more like fat tissue. 
+Did a 3 stage retraction of 1224 followed by a restoration. The problem is still likely a collision issue. The local herniated fat restored first and touched the plate. After that, further restoration became significantly slower, or basically stopped.<br>
+<img width="300" alt="Screenshot from 2026-05-25 22-00-20" src="https://github.com/user-attachments/assets/f95b2721-59bd-4626-8897-4109dce32037" />
+
+**Next steps:**
+- Restoration improvement: look for methods that enable fat tissue to behave more like fat tissue. 
+- Need a tracker for performance/time per component to identify bottle necks.
+- Need a tracker to track collision performance/penentration
+- Need a tracker for globe restoration.
+
+**Testing To-Do**<br>
+1. Baseline restoration
+   - Use `TetrahedronFEMForceField`
+   - Set `mu=0.0`
+   - Disable gravity and extra force
+   - Use plate `PointCollisionModel` only
+   - Record whether tissue contacts the plate, whether restoration stalls, and timing after contact
+
+2. Contact distance sweep
+   - Test:
+     ```python
+     CONTACT_DISTANCE = 0.02, 0.01, 0.005
+     ALARM_DISTANCE = 0.3, 0.2, 0.15
+     ```
+   - Record whether contact happens too early, penetrates, or stalls
+
+3. Collision model sweep
+   - Test plate collision as:
+     ```python
+     Point only
+     Triangle only
+     Point + Triangle
+     Point + Line + Triangle
+     ```
+   - Keep point-only as the baseline if triangle-triangle remains unreliable
+
+4. Solver tolerance sweep
+   - Test:
+     ```python
+     tolerance="1e-4", maxIterations="200"
+     tolerance="1e-5", maxIterations="500"
+     tolerance="1e-6", maxIterations="2000"
+     ```
+   - Record whether stalling is true equilibrium or solver slowdown
+
+5. Gravity/bias sweep
+   - Try weak gravity in the desired settling direction:
+     ```python
+     GRAVITY = [0, 0, -50]
+     GRAVITY = [0, 0, -100]
+     GRAVITY = [0, 0, -500]
+     ```
+   - Flip sign if needed
+   - Avoid physical gravity initially, e.g. `-9800 mm/s^2`
+
+6. Broad force instead of local force
+   - If gravity is not anatomically correct, apply a weak `ConstantForceField` over a broad ROI
+   - Avoid concentrated local force unless needed
+   - Record deformation severity
+
+7. Two-stage restoration
+   - Stage A: weak gravity or broad force to settle tissue onto the plate
+   - Stage B: export settled state, remove force, reload with:
+     ```python
+     position = settled
+     rest_position = original
+     ```
+   - Let FEM restore against the plate without artificial force
+
+8. Mesh quality check
+   - Check original mesh and stage-3 deformed mesh
+   - Record:
+     - minimum tet quality
+     - number of low-quality tets
+     - number of near-zero-volume tets
+     - number of inverted tets
+   - Treat hyperelastic failure as likely if stage-3 has near-zero or inverted tets
+
+9. Hyperelastic isolation test
+   - Disable plate/orbit collision
+   - Disable `RestShapeSpringsForceField`
+   - Use:
+     ```python
+     DT = 0.002
+     YOUNG_MODULUS = 30
+     ```
+   - If it still explodes, suspect initial strain or mesh quality rather than contact
+
+10. Material complexity later
+    - Do not add MeshROI multi-material until homogeneous restoration/contact behavior is understood
+    - Add stiffness contrast gradually
+    - Start with modest contrast, e.g. 5-20x, before trying very stiff regions
+
+
+Paragraph For SOFA Developer<br>
+I am simulating staged orbital fat retraction/restoration with a tetrahedral soft-tissue mesh in SOFA. The workflow uses several retraction stages, then a restoration scene where the current mechanical position is the stage-3 deformed tetra mesh and rest_position is the original tetra mesh. The goal is for soft orbital fat to restore/collapse onto a rigid patient-specific plate under elastic restoration and possibly weak gravity. With TetrahedronFEMForceField, restoration starts but often stalls or becomes extremely slow once the first protruding tissue region contacts the plate, even with friction set to mu=0.0. TetrahedronHyperelasticityFEMForceField tends to explode, likely due to large deformation or near-inverted elements in the staged output. Triangle-triangle collision has been unreliable, so I am mainly testing point/triangle collision combinations, contact distances, and solver tolerances. I would appreciate advice on the recommended collision model/contact response setup for a deformable tetrahedral tissue surface settling onto a rigid plate, and on whether there are diagnostics for contact constraint count, inverted tets, or hyperelastic instability in this scenario.
