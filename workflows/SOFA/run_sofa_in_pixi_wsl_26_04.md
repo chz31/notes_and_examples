@@ -70,7 +70,7 @@ sudo apt install unzip libpython3.12 libnss3 libglu1-mesa mesa-utils libgl1-mesa
 Test ldd $SOFA_ROOT/plugins/SofaPython3/lib/libSofaPython3.so | grep python
 Expect to see `libpython3.12.so.1.0 => /usr/lib/..., not not found.`
 
-Make a launcher script to set up a sofa paths:
+**Make a launcher bash script to set up a sofa paths:**
 ```
 mkdir -p ~/bin
 nano ~/bin/runsofa2512
@@ -86,7 +86,7 @@ export PYTHONPATH="$SOFA_ROOT/plugins/SofaPython3/lib/python3/site-packages:$PYT
 "$SOFA_ROOT/bin/runSofa-25.12.99" -l SofaPython3 -g imgui "$@"
 ```
 
-If no generic py3.12, the bash file should add LD_LIBRARY_PATH
+**If no generic py3.12, especially in a pixi env, the bash file should add LD_LIBRARY_PATH**
 ```
 #!/usr/bin/env bash
 
