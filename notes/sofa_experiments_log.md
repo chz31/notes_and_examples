@@ -862,5 +862,44 @@ Hyperelasitic test: if only disable the orbit, I could see that the distinct loc
 The collision model might be slightly different from the mesh created from gmsh. They are obviously very close but not identical. I wonder is this matters since the next time step depends on a deformed collision model through mapping
 
 A good diagnostic test is to use the boundary surface extracted directly from the deformed tetra mesh as collision/visual surface, instead of a separately generated OBJ/VTK surface. If that behaves better, the mismatch was part of the problem.
+```
+same regular FEM settings
+same plate/orbit collision
+only replace collision surface with tetra-derived boundary surface
+compare:
+  currentNumConstraints
+  wall_step_ms
+  globe displacement
+  visible local spikes
+```
 
 Or make the tissue as point collision model but plate and orbit as triangle collision model.
+
+**Overall, contact constraint increased after contact and a lot of time spent on constraint solver is the main disovery for the restoration scene.**
+
+Next tasks: Can we reduce contact constraints or compliance cost while preserving plausible restoration?
+1. Save the current baseline in stdout.txt using current settings
+2. ALARM_DISTANCE = 0.15; CONTACT_DISTANCE = 0.005
+3. Solver looseness: tolerance="1e-4"; maxIterations="200"; tolerance="1e-5"; maxIterations="500"
+4. SparseLDLSolver test: change to
+```
+tissue.addObject(
+    "SparseLDLSolver",
+    name="solver",
+    template="CompressedRowSparseMatrixMat3x3d",
+)
+```
+5. Plate-only collision test
+6. Orbit-only collision
+7. Recording each round:
+```
+settings changed
+max currentNumConstraints
+max wall_step_ms
+final globe_displacement_norm
+AdvancedTimer dominant block
+visual behavior: stable / spike / explosion / stalled
+```
+8. Two stage restoration with constant force
+
+
