@@ -845,7 +845,22 @@ I am simulating staged orbital fat retraction/restoration with a tetrahedral sof
 
 ## May 27
 Tasks:
-- Track performance; plot a curve for each component
-- Mesh quality check in gmsh
-- Hyperelastic isolation test
+- Track performance; plot a curve for each component (Done; did not draw a curve)
+- Mesh quality check in gmsh (Done: 1224 stage 3 deformed mesh quality was overall good). No apparent poor quality, fat, or inverted tets found. Most tets changed vol modestly after retraction.
+- Hyperelastic isolation test (Done)
+behavior tetra mesh responds more smoothly through BarycentricMapping
 - Two stage restoration with constant force
+
+Hyperelasitic test: if only disable the orbit, I could see that the distinct local protrusion first recovered, touched the plate, collision model became a bit like a spike, but behavior model just showed a protrusion, I could also see that the tissue mesh bounced back slightly, then quickly exploded. Collision surface mesh gets locally pulled/corrected strongly by contact constraints.
+- plate contact alone is enough to trigger instability
+- Hyperelastic model too fragile
+- Local spikes in collision model without contact still matter. That suggests the protruded region has high local strain or local mesh/collision-surface mismatch, even if not inverted.
+- Stable restoration dynamics are possible.
+- Contact constraints are expensive.
+- Hyperelastic contact makes the local protrusion/contact region numerically unstable.
+
+The collision model might be slightly different from the mesh created from gmsh. They are obviously very close but not identical. I wonder is this matters since the next time step depends on a deformed collision model through mapping
+
+A good diagnostic test is to use the boundary surface extracted directly from the deformed tetra mesh as collision/visual surface, instead of a separately generated OBJ/VTK surface. If that behaves better, the mismatch was part of the problem.
+
+Or make the tissue as point collision model but plate and orbit as triangle collision model.
