@@ -841,3 +841,11 @@ Did a 3 stage retraction of 1224 followed by a restoration. The problem is still
 
 Paragraph For SOFA Developer<br>
 I am simulating staged orbital fat retraction/restoration with a tetrahedral soft-tissue mesh in SOFA. The workflow uses several retraction stages, then a restoration scene where the current mechanical position is the stage-3 deformed tetra mesh and rest_position is the original tetra mesh. The goal is for soft orbital fat to restore/collapse onto a rigid patient-specific plate under elastic restoration and possibly weak gravity. With TetrahedronFEMForceField, restoration starts but often stalls or becomes extremely slow once the first protruding tissue region contacts the plate, even with friction set to mu=0.0. TetrahedronHyperelasticityFEMForceField tends to explode, likely due to large deformation or near-inverted elements in the staged output. Triangle-triangle collision has been unreliable, so I am mainly testing point/triangle collision combinations, contact distances, and solver tolerances. I would appreciate advice on the recommended collision model/contact response setup for a deformable tetrahedral tissue surface settling onto a rigid plate, and on whether there are diagnostics for contact constraint count, inverted tets, or hyperelastic instability in this scenario.
+
+
+## May 27
+Tasks:
+- Track performance; plot a curve for each component
+- Mesh quality check in gmsh
+- Hyperelastic isolation test
+- Two stage restoration with constant force
