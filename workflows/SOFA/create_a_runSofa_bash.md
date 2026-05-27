@@ -35,7 +35,8 @@ chmod +x ./bash_scripts/runsofa_bash
 
 Run the bash explicity
 ```
-./bash_scripts/runsofa2512 ./sofa_experiments/sofa_retraction_scene_debug.py
+./run_sofa.sh \
+/home/zhang/Documents/chi_vs_workspace/slicersofa_sofa_scratches/sofa_experiments/sofa_restoration_scene_debug.py
 
 ```
 
@@ -50,30 +51,28 @@ SOFA_GUI=batch ./run_sofa.sh \
   --computationTimeAtBegin \
   --computationTimeOutputType ljson \
   /home/zhang/Documents/chi_vs_workspace/slicersofa_sofa_scratches/sofa_experiments/sofa_restoration_scene_debug.py \
-  > /home/zhang/Documents/mesh_select/updated_sample_data_debug/logs/restoration_timer.ljson
+  > /home/zhang/Documents/mesh_select/updated_sample_data_debug/logs/restoration_timer_stdout.txt
 ```
 or
 ```
-"$SOFA_ROOT/bin/runSofa-25.12.99" \
-  -l SofaPython3 \
+./run_sofa.sh \
   -g batch \
   -a \
-  --computationTimeSampling 5 \
+  --computationTimeSampling 1 \
   --computationTimeAtBegin \
-  --computationTimeOutputType ljson \
+  --computationTimeOutputType stdout \
   /home/zhang/Documents/chi_vs_workspace/slicersofa_sofa_scratches/sofa_experiments/sofa_restoration_scene_debug.py \
-  > /home/zhang/Documents/mesh_select/updated_sample_data_debug/logs/restoration_timer.ljson
+  > /home/zhang/Documents/mesh_select/updated_sample_data_debug/logs/restoration_timer_stdout.txt
 ```
 
 or use GUI
 ```
-"$SOFA_ROOT/bin/runSofa-25.12.99" \
-  -l SofaPython3 \
-  --computationTimeSampling 5 \
+./run_sofa.sh \
+  --computationTimeSampling 1 \
   --computationTimeAtBegin \
-  --computationTimeOutputType ljson \
+  --computationTimeOutputType stdout \
   /home/zhang/Documents/chi_vs_workspace/slicersofa_sofa_scratches/sofa_experiments/sofa_restoration_scene_debug.py \
-  > /home/zhang/Documents/mesh_select/updated_sample_data_debug/logs/restoration_timer.ljson
+  > /home/zhang/Documents/mesh_select/updated_sample_data_debug/logs/restoration_timer_stdout.txt
 ```
 
 In the command:
@@ -99,7 +98,7 @@ export PYTHONPATH="$SOFA_ROOT/plugins/SofaPython3/lib/python3/site-packages:$PYT
   -a \
   --computationTimeSampling "${SOFA_TIMER_SAMPLING:-5}" \
   --computationTimeAtBegin \
-  --computationTimeOutputType "${SOFA_TIMER_OUTPUT:-ljson}" \
+  --computationTimeOutputType "${SOFA_TIMER_OUTPUT:-stdout}" \
   "$@"
 ```
 
@@ -107,5 +106,5 @@ And run:
 ```
 ./runSofa_tracker.sh \
   /home/zhang/Documents/chi_vs_workspace/slicersofa_sofa_scratches/sofa_experiments/sofa_restoration_scene_debug.py \
-  > /home/zhang/Documents/mesh_select/updated_sample_data_debug/logs/restoration_timer.ljson
+  > /home/zhang/Documents/mesh_select/updated_sample_data_debug/logs/restoration_timer_stdout.txt
 ```
