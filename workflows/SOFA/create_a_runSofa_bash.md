@@ -9,13 +9,14 @@ In Linux, create a bash to runSofa for v25.12.99 unzipped version as:
 
 ```
 #!/usr/bin/env bash
+set -e
 
 export SOFA_ROOT="/home/zhang/Downloads/SOFA_v25.12.99-full_Linux/SOFA_v25.12.99_Linux"
 export PYTHONPATH="$SOFA_ROOT/plugins/SofaPython3/lib/python3/site-packages:$PYTHONPATH"
 
-export SOFA_TIMER_ALL=20
+GUI="${SOFA_GUI:-imgui}"
 
-"$SOFA_ROOT/bin/runSofa-25.12.99" -l SofaPython3 -g imgui "$@"
+"$SOFA_ROOT/bin/runSofa-25.12.99" -l SofaPython3 -g "$GUI" "$@"
 ```
 
 `imgui` can be switched to `qglviewer` if not available.
@@ -34,4 +35,64 @@ Run the bash explicity
 ```
 ./bash_scripts/runsofa2512 ./sofa_experiments/sofa_retraction_scene_debug.py
 
+```
+
+
+## Enable AdvancedTimer performance tracker
+
+First way is to directly add AdvancedTimer wrappers in the runSofa command as a generic way:
+```
+SOFA_GUI=batch ./run_sofa.sh \
+  -a \
+  --computationTimeSampling 5 \
+  --computationTimeAtBegin \
+  --computationTimeOutputType ljson \
+  /home/zhang/Documents/chi_vs_workspace/slicersofa_sofa_scratches/sofa_experiments/sofa_restoration_scene_debug.py \
+  > /home/zhang/Documents/mesh_select/updated_sample_data_debug/logs/restoration_timer.ljson
+```
+or
+```
+"$SOFA_ROOT/bin/runSofa-25.12.99" \
+  -l SofaPython3 \
+  -g batch \
+  -a \
+  --computationTimeSampling 5 \
+  --computationTimeAtBegin \
+  --computationTimeOutputType ljson \
+  /home/zhang/Documents/chi_vs_workspace/slicersofa_sofa_scratches/sofa_experiments/sofa_restoration_scene_debug.py \
+  > /home/zhang/Documents/mesh_select/updated_sample_data_debug/logs/restoration_timer.ljson
+```
+
+In the command:
+```
+-g batch: no GUI, better for timing #can be removed with `-a` for manually starting animation in the gui
+-a: start animation automatically
+--computationTimeSampling 5: print timing every 5 animation steps
+--computationTimeAtBegin: include init timing
+--computationTimeOutputType ljson: easier to parse later than plain stdout
+```
+
+Second way is to create a bash dedicated to the tracker:
+```
+#!/usr/bin/env bash
+set -e
+
+export SOFA_ROOT="/home/zhang/Downloads/SOFA_v25.12.99-full_Linux/SOFA_v25.12.99_Linux"
+export PYTHONPATH="$SOFA_ROOT/plugins/SofaPython3/lib/python3/site-packages:$PYTHONPATH"
+
+"$SOFA_ROOT/bin/runSofa-25.12.99" \
+  -l SofaPython3 \
+  -g batch \
+  -a \
+  --computationTimeSampling "${SOFA_TIMER_SAMPLING:-5}" \
+  --computationTimeAtBegin \
+  --computationTimeOutputType "${SOFA_TIMER_OUTPUT:-ljson}" \
+  "$@"
+```
+
+And run:
+```
+./run_sofa_perf.sh \
+  /home/zhang/Documents/chi_vs_workspace/slicersofa_sofa_scratches/sofa_experiments/sofa_restoration_scene_debug.py \
+  > /home/zhang/Documents/mesh_select/updated_sample_data_debug/logs/restoration_timer.ljson
 ```
