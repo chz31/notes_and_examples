@@ -14,6 +14,8 @@ set -e
 export SOFA_ROOT="/home/zhang/Downloads/SOFA_v25.12.99-full_Linux/SOFA_v25.12.99_Linux"
 export PYTHONPATH="$SOFA_ROOT/plugins/SofaPython3/lib/python3/site-packages:$PYTHONPATH"
 
+export SOFA_TIMER_ALL=10
+
 GUI="${SOFA_GUI:-imgui}"
 
 "$SOFA_ROOT/bin/runSofa-25.12.99" -l SofaPython3 -g "$GUI" "$@"
@@ -57,6 +59,17 @@ or
   -g batch \
   -a \
   --computationTimeSampling 5 \
+  --computationTimeAtBegin \
+  --computationTimeOutputType ljson \
+  /home/zhang/Documents/chi_vs_workspace/slicersofa_sofa_scratches/sofa_experiments/sofa_restoration_scene_debug.py \
+  > /home/zhang/Documents/mesh_select/updated_sample_data_debug/logs/restoration_timer.ljson
+```
+
+or use GUI
+```
+"$SOFA_ROOT/bin/runSofa-25.12.99" \
+  -l SofaPython3 \
+  --computationTimeSampling 15 \
   --computationTimeAtBegin \
   --computationTimeOutputType ljson \
   /home/zhang/Documents/chi_vs_workspace/slicersofa_sofa_scratches/sofa_experiments/sofa_restoration_scene_debug.py \
