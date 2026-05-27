@@ -69,7 +69,7 @@ or use GUI
 ```
 "$SOFA_ROOT/bin/runSofa-25.12.99" \
   -l SofaPython3 \
-  --computationTimeSampling 15 \
+  --computationTimeSampling 5 \
   --computationTimeAtBegin \
   --computationTimeOutputType ljson \
   /home/zhang/Documents/chi_vs_workspace/slicersofa_sofa_scratches/sofa_experiments/sofa_restoration_scene_debug.py \
