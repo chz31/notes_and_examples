@@ -92,7 +92,7 @@ export PYTHONPATH="$SOFA_ROOT/plugins/SofaPython3/lib/python3/site-packages:$PYT
 
 And run:
 ```
-./run_sofa_perf.sh \
+./runSofa_tracker.sh \
   /home/zhang/Documents/chi_vs_workspace/slicersofa_sofa_scratches/sofa_experiments/sofa_restoration_scene_debug.py \
   > /home/zhang/Documents/mesh_select/updated_sample_data_debug/logs/restoration_timer.ljson
 ```
