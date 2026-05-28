@@ -23,6 +23,16 @@ cp /path/to/dir/example.txt /target_path/
 cp -r /path/to/dir/myfolder /target_path/
 ```
 
+Move a file or a folder
+```
+mv project_files /home/user/documents/
+mv -i source_folder destination_folder #ask to confirm overwrite
+mv -n source_folder destination_folder #Auto skip overwriting files with the same name
+mv -v source_folder destination_folder #print out files being transferred
+mv folder1 folder2 folder3 /home/user/backup/ #move multiple folders
+```
+
+
 See mounted drives
 ```
 lsblk
