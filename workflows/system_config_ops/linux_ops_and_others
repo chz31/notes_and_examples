@@ -22,3 +22,12 @@ cp /path/to/dir/example.txt /target_path/
 # copy a folder
 cp -r /path/to/dir/myfolder /target_path/
 ```
+
+See mounted drives
+```
+lsblk
+
+lsblk -h # See filesystem type
+
+df -h # Shows all mounted filesystems alongside their total storage capacity, used space, and available space in human-readable formats (GB/MB).
+```
