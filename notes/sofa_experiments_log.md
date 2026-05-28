@@ -903,3 +903,16 @@ visual behavior: stable / spike / explosion / stalled
 8. Two stage restoration with constant force
 
 
+## May 28
+Task:
+1. Create a retraction scene in SlicerSOFA using CT Brain and compare the stable centroids of actual eyeball and MeshROI selected indices. After that, track positions in retraction and restoration and visualize changes in Slicer (Done; there is a minor difference between actual centroid and MeshROI initial centroid: `-26.46756663544368, 89.05504265557123, -11.56861729696182` vs `-26.3434393564642	89.8967865013127	-13.3696739142428` for the CT Brain dataset).
+2. Update SparseLDLSolver to "CompressedRowSparseMatrixMat3x3d" (Dones; nothing changed. So the bottleneck is probably not just scalar-vs-Mat3 sparse matrix storage.)
+3. Two stage restoration with constant force (partially Done; not a viable solution for now because the local protrusion's hard contact still stalled simulation even with constant force added to pull a region downward).
+
+Current interpretation: the local fat herniation is probably real anatomy, not a mesh artifact. The problem is that the current homogeneous tissue model gives the protrusion the same stiffness/contact behavior as the rest of the orbital tissue. When it reaches the plate first, it creates many contact constraints and the ConstraintSolver becomes the dominant bottleneck. Increasing external force alone did not overcome this.
+
+
+
+
+
+
