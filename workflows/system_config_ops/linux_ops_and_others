@@ -32,6 +32,11 @@ mv -v source_folder destination_folder #print out files being transferred
 mv folder1 folder2 folder3 /home/user/backup/ #move multiple folders
 ```
 
+rename a folder
+```
+mv /home/user/old_folder /home/user/new_folder
+```
+
 
 See mounted drives
 ```
