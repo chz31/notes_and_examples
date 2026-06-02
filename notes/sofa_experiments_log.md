@@ -911,7 +911,25 @@ Task:
 
 Current interpretation: the local fat herniation is probably real anatomy, not a mesh artifact. The problem is that the current homogeneous tissue model gives the protrusion the same stiffness/contact behavior as the rest of the orbital tissue. When it reaches the plate first, it creates many contact constraints and the ConstraintSolver becomes the dominant bottleneck. Increasing external force alone did not overcome this.
 
+### May 29 - June 1
+Did a couple of visualization and tissue tracking:
+- Using rigid registration of MeshROI-selected points across time steps to track the globe. Extracted centroids and track their translations for both rigidly registered globe surface model and MeshROI selected points. There are slightly differences between them due to MeshROi selected points not identical to surface model.
+- Using TPS registration of MeshROI-selected points to track the inferior rectus. Transformation is observed but also a bit off because MeshROI selected indices are not entirely within the surface mesh.
+- Did the grid transform for the image. Had to reserve the displacement sign. However, the grid size appeared to be much larger than the actual mesh and only a few grids overlap with the tissue, perhaps due to set up or just a visualization effect. Need to fix it.
+- Used barycentric mapping to deform the globe and muscle along with the mesh. Cannot determine whether deformation looks better vs TPS.
+  - Barycentric mapping may want to have good overlapping between two models or expected the mapped surface model is within the mesh.
+  - However, for the CTBrain model, inferior rectus surface model is partially outside the tissue mesh due to reducing the tissue size to avoid intersection between the bone and the tissue. This may make the muscle restoration tracking probablemtic.
+  - For fx case, this might be better at least for inferior rectus due to fat herniation.
+  - Potential solutions require manual tuning:
+    - Maybe expanding skull margin by 0.5 instead of 1 mm.
+    - Manually added inferior rectus/medial rectus back to the unified tissue segmentation with these segments reduced minimally, such as by only 0.1mm from the skull.
 
+Meshing is also important to improve tissue tracking
+- Current meshing is to create a homogeneous mesh and select indices according to MeshROI. Thus, it may include indices outside the MeshROI depending on how selection works
+- Level 1: homogeneous tissue using the previous selection method. Might be sufficient for the globe but perhaps not so accurate for IR muscle.
+- Level 2: Improve indices selection by meshROI, perhaps using Slicer methods. For example, only include tets with centroids inside a surface model.
+- Level 3: Embedded MeshROI surface models into the meshing process by enabling denser meshing at from the surface to better capture the surface geometry for later MeshROI selection. This may improve overlapping between surface model and selected elements. However, the surface model may still need to be located within the unified mesh.
+- Level 4: Fragmented multi-volume mesh. In this case, gmsh knows each surface mesh represents so when meshing it can mesh them separately. In the end, a unified mesh can be delivered with tags about what is what. However, this has highest level of surface model preprocessing and the most fragile. Perhaps not make it as a hard target for the R21.
 
 
 
