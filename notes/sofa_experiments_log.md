@@ -931,6 +931,39 @@ Meshing is also important to improve tissue tracking
 - Level 3: Embedded MeshROI surface models into the meshing process by enabling denser meshing at from the surface to better capture the surface geometry for later MeshROI selection. This may improve overlapping between surface model and selected elements. However, the surface model may still need to be located within the unified mesh.
 - Level 4: Fragmented multi-volume mesh. In this case, gmsh knows each surface mesh represents so when meshing it can mesh them separately. In the end, a unified mesh can be delivered with tags about what is what. However, this has highest level of surface model preprocessing and the most fragile. Perhaps not make it as a hard target for the R21.
 
+### June 3 - June 4
+A useful way to think about it:
+- Young’s modulus controls “how strongly the tissue wants to return to rest shape.”
+- Gravity + mass controls “how strongly weight pulls it downward.”
+- Damping controls “how quickly motion dies out.”
+- Constraints/contact control “where it is allowed to go.”
+
+I changed youngs modulus to 3 kpa and the soft tissue did continue dropping but resulted in lots of penetration especially at the herniated region.
+
+I then doubled the rayleigh stiffness and ralyleigh mass to 0.02 and 0.2 and added mu=0.1 to FrictionContactConstraint. Simulation became much slower much the penetration after restoration is minimized and the tissue was able to move very close to the plate with small minimal gap. Small penetration was pretty much due to collision model. The underlying tet mesh was much better.
+
+Screenshots taken at 30 time step. Mesh stabilized roughly at around 10-15 time step.
+
+<img width="300" alt="Screenshot from 2026-06-04 15-40-56" src="https://github.com/user-attachments/assets/b6da17a3-eb3c-453d-a1a0-69cc4591d24c" />
+<img width="300" alt="Screenshot from 2026-06-04 15-40-14" src="https://github.com/user-attachments/assets/3bfde1c2-e6c9-4aec-b951-884460199afd" />
+<img width="300" alt="Screenshot from 2026-06-04 15-40-38" src="https://github.com/user-attachments/assets/e7888283-7b05-4c00-8b40-f1b3ae6f5dad" />
+<img width="300" alt="Screenshot from 2026-06-04 15-41-27" src="https://github.com/user-attachments/assets/8ae4662d-3262-4855-8016-7ed7c1d047bb" />
 
 
 
+Next steps:
+- Redo retraction stages with rest_position set to original anatomy.
+- Keep the same mechanical setup across retraction/restoration.
+- Add sparse roof attachment first.
+- Keep collision, but simplify it and tolerate modest retraction penetration if restoration is stable.
+- Compare restoration with/without roof tethers using the same deformed starting state.
+
+Also add a globe-only tet selection.
+
+And a quick parameter sweep testing:
+```
+YOUNG_MODULUS = 3, 5, 10
+mu = 0.0, 0.05, 0.1
+rayleighMass = 0.01 or 0.02
+rayleighStiffness = 0.1 or 0.2
+```
