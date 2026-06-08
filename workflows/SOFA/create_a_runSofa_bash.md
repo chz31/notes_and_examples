@@ -49,7 +49,7 @@ SOFA_GUI=batch ./run_sofa.sh \
   -a \
   --computationTimeSampling 5 \
   --computationTimeAtBegin \
-  --computationTimeOutputType ljson \
+  --computationTimeOutputType stdout \
   /home/zhang/Documents/chi_vs_workspace/slicersofa_sofa_scratches/sofa_experiments/sofa_restoration_scene_debug.py \
   > /home/zhang/Documents/mesh_select/updated_sample_data_debug/logs/restoration_timer_stdout.txt
 ```
@@ -83,6 +83,17 @@ In the command:
 --computationTimeAtBegin: include init timing
 --computationTimeOutputType ljson: easier to parse later than plain stdout
 ```
+
+Using personal computer:
+```
+./run_sofa_home.sh \
+  --computationTimeSampling 1 \
+  --computationTimeAtBegin \
+  --computationTimeOutputType stdout \
+  /home/chi/Documents/cz_vs_workspace/slicersofa_sofa_scratches/sofa_experiments/sofa_retraction_scene_1224.py \
+  > /home/chi/Documents/mesh_select/1224/retraction_stages_meshROI/logs/restoration_timer_stdout.txt
+```
+
 
 Second way is to create a bash dedicated to the tracker:
 ```
