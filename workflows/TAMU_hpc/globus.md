@@ -46,3 +46,21 @@ You should see that transfer has been initiated:<br>
 
 Go to **Activity** tab to see the progress:<br>
 <img width="600" alt="image" src="https://github.com/user-attachments/assets/f994b873-13f7-429b-9173-8c648d3adeb4" />
+
+
+## Set a local folder as a sharable collection
+Use the globus gui, click `Preference`, locate the folder, and check `share`.<br>
+<img width="400" alt="image" src="https://github.com/user-attachments/assets/3f54af8a-8d18-4e82-97cf-fb0df62aec7c" />
+
+In the globus.org website, go to `Collections`, select the local endpoint.
+
+Click `Add Guest Collection`. Log in NetID if needed.
+
+Locate the shared folder. Enter a Display Name and create a guest collection:<br>
+<img width="350" alt="image" src="https://github.com/user-attachments/assets/11a93a23-25ac-4a36-b24b-f83d5f0a9aab" />
+
+After created, the collection can be founded under Collections tab in the main local collection:<br>
+<img width="300" alt="image" src="https://github.com/user-attachments/assets/f6127dd0-3c94-40d6-b5d1-3450b5b4fa7c" />
+
+Click `permissions` to add permission to specific TAMU users. Check `write` to enable uploding to the collection, i.e., the local shared folder.<br>
+<img width="300" alt="image" src="https://github.com/user-attachments/assets/40fec2ea-66c1-4c16-a44c-c3e2b27f256a" />
