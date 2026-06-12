@@ -54,7 +54,9 @@ Use the globus gui, click `Preference`, locate the folder, and check `share`.<br
 
 In the globus.org website, go to `Collections`, select the local endpoint.
 
-Click `Add Guest Collection`. Log in NetID if needed.
+Click `Add Guest Collection` under the Collection tab. Log in NetID if needed.<br>
+<img width="400" alt="image" src="https://github.com/user-attachments/assets/f552acf7-8741-47fa-9e8a-5019c95ec8f4" />
+
 
 Locate the shared folder. Enter a Display Name and create a guest collection:<br>
 <img width="350" alt="image" src="https://github.com/user-attachments/assets/11a93a23-25ac-4a36-b24b-f83d5f0a9aab" />
