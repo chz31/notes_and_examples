@@ -145,4 +145,73 @@ You can see more details about the validation results in the subfolder `validati
 
 To run the model, search and install the **nnUNet** extension in Slicer. Restart the computer, then switch to the nnUNet module.
 
+**Use the the nnUNet app directly to generate predictions**<br>
+We may neet to install `nnunetv2 batchgeneratorsv2`
 
+check: `python -c "import batchgeneratorsv2.helpers.scalar_type; print('batchgeneratorsv2 OK')"`
+
+If no module found error reproted, `pip install -U nnunetv2 batchgeneratorsv2` and recheck using the above command.
+
+Manually set up nnU-Net paths before predictions, such as:
+```
+export nnUNet_raw=/media/zhang/UBUNTU/data/dl_data/data_preprocessing_2/nnUNet_raw_data_base
+export nnUNet_preprocessed=/media/zhang/UBUNTU/data/dl_data/data_preprocessing_2/nnUNet_preprocessed
+export nnUNet_results=/media/zhang/UBUNTU/data/dl_data/results_2/nnUNet_trained_models
+```
+Manually change the paths to `nnUNet_raw_data_base`, `nnUNet_preprocessed`, and `nnUNet_trained_models`
+
+1. Use the model in folder 0:
+
+First, create folders `infer_in` and `infer_out`. Put images there and rename it with format `new_ct_0000.nii.gz`
+
+```
+cd /path/to/the/root/of/infer_in
+# for example: cd /media/zhang/UBUNTU/data/dl_data/predictions
+
+nnUNetv2_predict_from_modelfolder \
+  -i infer_in \
+  -o infer_out \
+  -m /media/zhang/UBUNTU/data/dl_data/results_2/nnUNet_trained_models/Dataset001_monai_nn_tr/nnUNetTrainer__nnUNetPlans__3d_fullres \
+  -f 0 \
+  -chk checkpoint_final.pth
+
+```
+
+Prediction using all folders:
+```
+python -m monai.apps.nnunet nnUNetV2Runner plan_and_process \
+  --input_config "./input.yaml" \
+  --c "('3d_fullres',)" \
+  --npfp 1 \
+  --n_proc "(1,)" \
+  --verbose True
+```
+
+(Not tested) Limit number of workers
+```
+nnUNetv2_predict_from_modelfolder \
+  -i infer_in \
+  -o infer_out \
+  -m /media/zhang/UBUNTU/data/dl_data/results_2/nnUNet_trained_models/Dataset001_monai_nn_tr/nnUNetTrainer__nnUNetPlans__3d_fullres \
+  -f 0 1 2 3 4 \
+  -chk checkpoint_final.pth \
+  -npp 1 \
+  -nps 1
+
+# -npp = number of preprocessing workers
+# -nps = number of segmentation export workers
+```
+
+(Not tested) Further reduce GPU limitation by adding these tags to have the most conservative version:
+```
+nnUNetv2_predict_from_modelfolder \
+  -i infer_in \
+  -o infer_out \
+  -m /media/zhang/UBUNTU/data/dl_data/results_2/nnUNet_trained_models/Dataset001_monai_nn_tr/nnUNetTrainer__nnUNetPlans__3d_fullres \
+  -f 0 1 2 3 4 \
+  -chk checkpoint_final.pth \
+  -npp 1 \
+  -nps 1 \
+  --not_on_device \
+  --disable_tta
+```
