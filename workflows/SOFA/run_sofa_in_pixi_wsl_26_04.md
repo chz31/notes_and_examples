@@ -1,5 +1,11 @@
 Open WSL in admin mode
 
+Install libGL libraries and libraries for OpenGL
+```
+sudo apt install -y libglu1-mesa
+sudo apt install -y libxft2 libxrender1 libx11-6 libxext6 fontconfig
+```
+
 Directly unzip SOFA v25.12.99, for example
 ```
 mkdir -p ~/sofa
