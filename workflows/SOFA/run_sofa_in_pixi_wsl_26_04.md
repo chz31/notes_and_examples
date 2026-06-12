@@ -2,6 +2,7 @@ Open WSL in admin mode
 
 Install libGL libraries and libraries for OpenGL
 ```
+sudo apt update
 sudo apt install -y libglu1-mesa
 sudo apt install -y libxft2 libxrender1 libx11-6 libxext6 fontconfig
 ```
