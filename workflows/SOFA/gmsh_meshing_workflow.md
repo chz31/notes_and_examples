@@ -57,7 +57,7 @@ In the gmsh script, change lines 11 and 12 for the correct path
 ```
 path = '/full/path/to/the/root/foler/containing/the/soft/tissue/stl'
 gmsh.merge(os.path.join(path, 'your_stl_file_name.stl'))
-
+```
 Go to the gmsh pixi env folder and activate the env:
 ```
 pixi shell
