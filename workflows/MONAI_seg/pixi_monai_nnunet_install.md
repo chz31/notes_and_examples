@@ -57,7 +57,7 @@ python -m pip install nnunetv2
 
 Install dependencies
 ```
-python -m pip install nibabel SimpleITK scikit-image pandas matplotlib tensorboard tqdm
+python -m pip install nibabel SimpleITK scikit-image pandas matplotlib tensorboard tqdm fire
 ```
 
 Check if nnunetv2 change torch version
