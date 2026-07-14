@@ -215,3 +215,62 @@ nnUNetv2_predict_from_modelfolder \
   --not_on_device \
   --disable_tta
 ```
+
+
+
+## Use Residual Encoder Presets in nnU-Net as recommended by nnUNet
+
+nnUNet recommends using the Residual Encoder as the new default for planning and preprocessing and training: [Residual Encoder in nnUNet](https://github.com/MIC-DKFZ/nnUNet/blob/master/documentation/resenc_presets.md#residual-encoder-presets-in-nnu-net)
+
+Full plan and preprocessing:
+```
+python -m monai.apps.nnunet nnUNetV2Runner plan_and_process \
+    --input_config "./input.yaml" \
+    --pl "nnUNetPlannerResEncXL" \
+    --gpu_memory_target 40 \
+    --overwrite_plans_name "nnUNetResEncUNetXLPlans"
+```
+`gpu_memory_target` is for 48GPU. MONAI 1.5.2 by default only targeting at 8GB GPU usage: `gpu_memory_target: int = 8`. Note it does not impose a hard runtime GPU-memory limit.
+
+If only generate `3d_fullres`:
+```
+python -m monai.apps.nnunet nnUNetV2Runner plan_and_process \
+    --input_config "./input.yaml" \
+    --pl "nnUNetPlannerResEncXL" \
+    --gpu_memory_target 40 \
+    --overwrite_plans_name "nnUNetResEncUNetXLPlans" \
+    --c "('3d_fullres',)" \
+    --n_proc "(8,)"
+```
+**For already preprocessed data**:`--no_pp True` means no preprocessing. If data is already preprocessed, this will only generate a new plan for the preprocessed dataset.This works because ResEnc used the same preprocessed datset. 
+```
+python -m monai.apps.nnunet nnUNetV2Runner plan_and_process \
+    --input_config "./input.yaml" \
+    --pl "nnUNetPlannerResEncXL" \
+    --gpu_memory_target 40 \
+    --overwrite_plans_name "nnUNetResEncUNetXLPlans" \
+    --no_pp True
+```
+
+Training a model using the new plan
+
+Train a single model
+```
+python -m monai.apps.nnunet nnUNetV2Runner train_single_model \
+    --input_config "./input.yaml" \
+    --config "3d_fullres" \
+    --fold 0 \
+    --trainer_class_name "nnUNetTrainer_2000epochs" \
+    --p "nnUNetResEncUNetXLPlans"
+```
+
+Train all five folders
+```
+for f in 0 1 2 3 4; do
+  python -m monai.apps.nnunet nnUNetV2Runner train_single_model \
+    --input_config "./input.yaml" \
+    --config "3d_fullres" \
+    --fold "$f" \
+    --p "nnUNetResEncUNetXLPlans"
+done
+```
