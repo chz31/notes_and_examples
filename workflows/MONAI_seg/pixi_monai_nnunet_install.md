@@ -33,14 +33,7 @@ Check gpu
 nvidia-smi
 ```
 
-Install pytorch with specific torchvision and torchaudio versions to avoid conflict
-```
-python -m pip install \
-  torch==2.7.1 \
-  torchvision==0.22.1 \
-  torchaudio==2.7.1 \
-  --index-url https://download.pytorch.org/whl/cu126
-```
+Install pytorch with specific torchvision and torchaudio versions to avoid conflict [pytorch installation](https://pytorch.org/get-started/previous-versions/)
 
 Verify torch & cuda
 ```
