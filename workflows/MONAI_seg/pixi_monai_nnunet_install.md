@@ -35,6 +35,8 @@ nvidia-smi
 
 Install pytorch with specific torchvision and torchaudio versions to avoid conflict [pytorch installation](https://pytorch.org/get-started/previous-versions/)
 
+Current installed version: `torch 2.8.0 + cu126`
+
 Verify torch & cuda
 ```
 python - <<'EOF'
