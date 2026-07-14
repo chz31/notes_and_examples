@@ -59,6 +59,7 @@ Wait until the process finishes. It may take a while.
 
 After this step, if your raw data does not change and if you set `nnunet_results` directory differently from the directory of converted data in input.ymal, you can reuse these converted data and model configurations.
 
+
 ### If no sufficient RAM for preprocessing
 Try limit the number of workers. The default is (8,8,8). Starting with one worker per process
 ```
@@ -251,6 +252,16 @@ python -m monai.apps.nnunet nnUNetV2Runner plan_and_process \
     --overwrite_plans_name "nnUNetResEncUNetXLPlans" \
     --no_pp True
 ```
+**For faster speed, switch to `nnUNetPlannerResEncL` or `nnUNetPlannerResEncM` for `pl`**. Downsize gpu target accordingly, which is mainly related to patch size. For example
+```
+python -m monai.apps.nnunet nnUNetV2Runner plan_and_process \
+    --input_config "./input.yaml" \
+    --pl "nnUNetPlannerResEncL" \
+    --gpu_memory_target 24 \
+    --overwrite_plans_name "nnUNetResEncUNetLPlans" \
+    --no_pp True
+```
+
 
 Training a model using the new plan
 
@@ -273,4 +284,14 @@ for f in 0 1 2 3 4; do
     --fold "$f" \
     --p "nnUNetResEncUNetXLPlans"
 done
+```
+
+For `nnUNetPlannerResEncL` plan:
+```
+python -m monai.apps.nnunet nnUNetV2Runner train_single_model \
+    --input_config "./input.yaml" \
+    --config "3d_fullres" \
+    --fold 0 \
+    --trainer_class_name "nnUNetTrainer_2000epochs" \
+    --p "nnUNetResEncUNetLPlans"
 ```
