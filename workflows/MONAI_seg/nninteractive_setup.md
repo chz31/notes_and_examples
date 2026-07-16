@@ -38,6 +38,8 @@ Start the server
 nninteractive-slicer-server --host 0.0.0.0 --port 1527
 ```
 
+If it is the first time, set up server url in Slicer nnInteractive GUI as `http://localhost:1527`.
+
 Ctrl + C to exit the server
 
 Exit Pixi by typing
