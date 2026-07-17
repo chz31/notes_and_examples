@@ -99,6 +99,15 @@ python -m monai.apps.nnunet nnUNetV2Runner train_single_model --input_config "./
     --trainer_class_name "nnUNetTrainer_5epochs"
 ```
 
+**To use all cases for training rather than excluding a random validation set, use `--fold all` tag**. By dafault, nnUNet looks for a `splits_final.json` for train-val split in the `data_preprocessing` folder. If it does not find one, it will generate one for random train-val split. This json file can be reused for the same train-val split. Setting `--fold all` will disable the train-val split and utilize all cases for training and validation.
+```
+python -m monai.apps.nnunet nnUNetV2Runner train_single_model \
+    --input_config "./input.yaml" \
+    --config "3d_fullres" \
+    --fold all \
+    --trainer_class_name "nnUNetTrainer_2000epochs"
+```
+
 
 **Use all available GPU(s) to train five models under the 3d_fullres configuration** <br>
 '3d_fullres' configuration should be sufficient for the 3D segmentation model training. By default, monai-nnunet will train five different models with cross-validation (i.e., each time, it will randomly pick up some cases as validating dataset without being included in the training process). 
