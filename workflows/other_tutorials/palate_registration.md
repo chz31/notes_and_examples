@@ -53,7 +53,7 @@ Right click the eyeball to play with the Opacity bar for better visualization.
 At the upper left corner, click File --> Save data. Click "Create a Medical Record Bundle" to save the whole scene. Change file name and directory if needed.<br>
 <img width="500" alt="image" src="https://github.com/user-attachments/assets/0015950e-6dc3-40e5-a3a0-a10dba61e196" />
 
-
+The saved results can be drag and drop into Slicer to reload the whole scene.
 
 # Surface-based registration using the teeth region
 ## 1. Clone the model
@@ -120,7 +120,7 @@ In Output registered model, simply `Create a new model` without renaming it sinc
 
 <img width="500" alt="image" src="https://github.com/user-attachments/assets/cdbcc18f-7373-4912-86e7-faf3f8c5ca5f" />
 
-Repeat the process to registered the cut model like:
+Repeat the process to registered the cut model like:<br>
 <img width="600" alt="image" src="https://github.com/user-attachments/assets/149461ed-df63-4444-a0b1-2e5c54914ab0" />
 
 ## 6. Align the actual models based on the modified registration from step 5
