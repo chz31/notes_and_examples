@@ -103,6 +103,42 @@ Select `Curve Cut`<br>
 In `Input nodes`, select `Model` as the model you want to cut, and select `Curve` and `Inside point` accordingly<br>
 <img width="300" alt="image" src="https://github.com/user-attachments/assets/d3a71708-3266-4c10-8363-e68ac010195e" />
 
+In `Output nodes`, simply select the `Oytside model` as the same model you want to cut.
+<img width="400" height="363" alt="image" src="https://github.com/user-attachments/assets/cced9875-cb40-44cd-bed7-c40d59c25eaa" />
 
+Click `Apply`, you should see:
+<img width="400" alt="image" src="https://github.com/user-attachments/assets/863b8602-ee7c-4cf2-9c3b-9d0d583bb296" />
 
+## 4. repeat 2-3 for another model
+Go back to `Data` module and hide everything other than the model you want to cut. Generate another cut model:<br>
+<img width="400" alt="image" src="https://github.com/user-attachments/assets/f118190c-5c77-4379-8787-c660373fc78d" />
 
+## 5. Rigid registration in FastModelAlign
+Now switch to `FastModelAlign` and do another registration using the cut model
+
+In Output registered model, simply `Create a new model` without renaming it since we do not need it for comparison.
+
+<img width="500" alt="image" src="https://github.com/user-attachments/assets/cdbcc18f-7373-4912-86e7-faf3f8c5ca5f" />
+
+Repeat the process to registered the cut model like:
+<img width="600" alt="image" src="https://github.com/user-attachments/assets/149461ed-df63-4444-a0b1-2e5c54914ab0" />
+
+## 6. Align the actual models based on the modified registration from step 5
+Switch back to Data Module, you should see a new transform object created. This one recored the transform trajectory from step 5.
+<img width="300" alt="image" src="https://github.com/user-attachments/assets/05ae1c29-bcf7-4955-8c4d-359bb65a3c0c" />
+
+Now, hide everything by toggle the eyeball. Clone the `Source Model` again, visualize it, and name it to something like `final_surgery_cut_to_initial`. 
+
+Right click the grid at the right side and select the transform you just created:<br>
+<img width="300" lt="image" src="https://github.com/user-attachments/assets/ff2cb5cc-835b-4e00-a425-326d5c18586b" />
+
+You should see that the gird is rotated. Display the Target model (initial in this case), you'll see they are aligned.
+
+<img width="700" alt="image" src="https://github.com/user-attachments/assets/da0081a4-d9ef-48ef-9a22-d6862d69c109" />
+
+Optionally, if you right click the transform grid symbol, you can `Harden transform` to finalize it.
+
+You can then display the last registration results for a comparison. 
+
+## 7. Save the results
+Save the results as previously shown.
