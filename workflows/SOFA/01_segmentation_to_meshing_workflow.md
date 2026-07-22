@@ -5,7 +5,7 @@
 Switch to the Segment Editor module, select the segmentation and reference volume.
 
 ### 2. Create an empty orbital tissue segment for one side.
-Use logical operator to add all orbital tissue on that side to the empty segment.<br>
+Use the Logical Operator tool in Segment Editor to add all orbital tissue on that side to the empty segment.<br>
 <img width="300" alt="image" src="https://github.com/user-attachments/assets/6991cac5-6386-4dde-acd8-e44733051803" />
 
 Browse through the slices. Make sure there is no internal holes. Switch to 'Smoothing' tool. In "Smoothing method", select "Closing (fill holes)". Alter kernal size to 5x5x5 pixels, and hit Apply.
@@ -13,7 +13,7 @@ This should close most small holes. You may also need to manually closing holes 
 <img width="300" alt="image" src="https://github.com/user-attachments/assets/b389c534-511c-49a3-96b2-d509b94748cf" />
 
 ### 3. Clean the skull segment, and create an empty new segment and copy the skull into it using Logical Operator. 
-Use scissor tool to crop the skull to leave only orbital region. Clean the fracture site to remove isolated bones. Fill holes at the unfractured regions. You may first use the "Closing (fill holes") effect in 
+Use scissor tool to crop the skull to leave only orbital region. Clean the fracture site to remove isolated bones. Fill holes at the unfractured regions, such as using the Paint Tool in Segment Editor. You may first use the "Closing (fill holes") effect in 
 the smoothing method again and then manually paint the remaining holes.
 
 Expand a cloned skull segment by 1mm using Margin<br>
