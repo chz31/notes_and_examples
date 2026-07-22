@@ -7,7 +7,7 @@ Switch to the `Segment Editor` module, select the segmentation and reference vol
 ### 2. Create an empty orbital tissue segment for one side.
 Create an empty segment to combine tissue segments into one and name it as something like "orbital_tissue_combined".
 
-Use the Logical Operator tool in Segment Editor to add all orbital tissue on that side to the empty segment. **Don't forget to enable `Allow Overlapping` first.<br>
+Use the Logical Operator tool in Segment Editor to add all orbital tissue on that side to the empty segment. **Don't forget to enable `Allow Overlapping` first**.<br>
 <img width="500" alt="image" src="https://github.com/user-attachments/assets/6991cac5-6386-4dde-acd8-e44733051803" />
 
 Browse through the slices. Make sure there is no internal holes. Switch to 'Smoothing' tool. In "Smoothing method", select "Closing (fill holes)". Alter kernal size to 5x5x5 pixels, and hit Apply.
