@@ -36,7 +36,7 @@ Go back to data module. Hide all other segments but only the combined orbital ti
 Switch to the "Surface Toolbox" module. Before downsampling it, save your results first since downsampling may have some glitch. You can downsample the tissue model using the default.<br>
 <img width="500" alt="image" src="https://github.com/user-attachments/assets/29db9ed5-e1f2-40c2-9d00-94571ce9440f" />
 
-You can then remesh it using `Uniform remesh` in the `Surface Toolbox` module. Try "Number of points" = 1 to 1.5k points. Set "Subdivide" = 1 or even 2. Visually check the resultant model. Pay attention to the herniated region. <br>
+You can then remesh it using `Uniform remesh` in the `Surface Toolbox` module. Try "Number of points" = 1 to 1.5k points (e.g., 1.2k). Set "Subdivide" = 1 or even 2. Visually check the resultant model. Pay attention to the herniated region. <br>
 <img width="500" alt="image" src="https://github.com/user-attachments/assets/bb734214-d96a-4dab-86c4-c5ab45495f30" />
 
 Go to "Models" module. Select the remeshed surface model. Alternatively, you can just right click the remeshed model in `Data` and click `Edit Properties`. In `3D Display`, Choose `Surface with Edges` in `Representation` . You want to see overall uniformly distributed triangles, including herniated region like below:<br>
@@ -71,7 +71,7 @@ python /full/path/to/the/script/root/folder/gmsh_mesh_creation_test.py
 ```
 
 Hopefully, you can see something like below with internal tetrahedra:<br>
-<img width="300" alt="image" src="https://github.com/user-attachments/assets/aa0863d9-6537-4735-962e-ea1272c40ddf" />
+<img width="500" alt="image" src="https://github.com/user-attachments/assets/aa0863d9-6537-4735-962e-ea1272c40ddf" />
 
 Monitor if the terminal produced error messages.
 
