@@ -54,6 +54,20 @@ Follow the instructions above to downsample or remesh the skull in Surface Toolb
 
 Save the segmentation in .seg.nrrd and model in both stl and obj.
 
+### 7.Create individual tissue surface models
+Create below 3 segments:
+- Eyeball
+- Optic nerve
+- A segment combined all muscles
+
+Convert these segments to surface models.
+
+Downsample or uniform remesh these surface models in Surface Toolbox to a few hundreds of points, for example
+- Globe: 500 pts
+- Optic nerve: 400 pts
+- Muscle_combined: 900 pts
+
+
 ## 2. Run gmsh script to do the meshing for the combined soft tissue model
 In the gmsh script, change lines 11 and 12 for the correct path
 ```
@@ -82,7 +96,7 @@ gmsh.write(os.path.join(path, 'your_choice_of_name.vtk'))
 ```
 The meshes in both msh and vtk formats should be saved in the folder specificed by `path`. You can load vtk into Slicer directly.
 
-## 3. Run quality check
+**Run mesh quality check**
 Look at the terminal. It should print out some basic information. <br>
 <img width="500" alt="image" src="https://github.com/user-attachments/assets/9af63575-b4d0-43c3-b418-cb161f5a3f69" />
 
@@ -94,15 +108,17 @@ python /home/zhang/Documents/chi_vs_workspace/slicersofa_sofa_scratches/sofa_exp
 ```
 Paste the output into the AI chat window to read it.
 
-## 4.Create individual tissue surface models
-Create below 3 segments:
-- Eyeball
-- Optic nerve
-- A segment combined all muscles
 
-Convert these segments to surface models.
+## 3. Create a surface model based on the combined tissue mesh
+To have optimal mapping between collision and tetrahedral mesh, we can extract a surface model directly from the mesh.
 
-Downsample or uniform remesh these surface models in Surface Toolbox to a few hundreds of points, for example
-- Globe: 500 pts
-- Optic nerve: 400 pts
-- Muscle_combined: 900 pts
+In the script `extract_sruface_from_tet_vtk.py`, change lines 31-34 accordingly.
+```
+DEFAULT_STAGE_DIR = "C:/Users/chi.zhang/Documents/mesh_select/sample_data_debug/new_meshes" #Directory of the mesh
+DEFAULT_TET_VTK = os.path.join(DEFAULT_STAGE_DIR, "orbital_tissue_remesh_1k.vtk") #Mesh file name
+DEFAULT_SURFACE_VTK = os.path.join(DEFAULT_STAGE_DIR, "orbital_tissue_remesh_1k_surface_from_tet.vtk") #exported surface model in vtk
+DEFAULT_SURFACE_OBJ = os.path.join(DEFAULT_STAGE_DIR, "orbital_tissue_remesh_1k_surface_from_tet.obj") #exported surface model in obj
+```
+Open Slicer, and run the script either by copy-pasting or Ctrl+G.
+
+The surface models will be stored in the paths specified in lines 33 and 34.
