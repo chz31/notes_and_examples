@@ -39,8 +39,8 @@ Switch to the "Surface Toolbox" module. Before downsampling it, save your result
 You can then remesh it using `Uniform remesh` in the `Surface Toolbox` module. Try "Number of points" = 1 to 1.5k points. Set "Subdivide" = 1 or even 2. Visually check the resultant model. Pay attention to the herniated region. <br>
 <img width="500" alt="image" src="https://github.com/user-attachments/assets/bb734214-d96a-4dab-86c4-c5ab45495f30" />
 
-Go to "Models" module selected the remeshed surface. In "3D Display", select "Representation" as "Surface with Edges". You want to see uniformly distributed triangles, including herniated region like below:<br>
-<img width="500" alt="image" src="https://github.com/user-attachments/assets/3382ab59-38e9-408d-8331-01573dd7ca8b" />
+Go to "Models" module. Select the remeshed surface model. Alternatively, you can just right click the remeshed model in `Data` and click `Edit Properties`. In `3D Display`, Choose `Surface with Edges` in `Representation` . You want to see overall uniformly distributed triangles, including herniated region like below:<br>
+<img width="700" alt="image" src="https://github.com/user-attachments/assets/3382ab59-38e9-408d-8331-01573dd7ca8b" />
 
 Save the segmentation in .seg.nrrd and model in both stl and obj.
 
@@ -50,7 +50,7 @@ Go back to the Segmentation Editor module and visualize the skull segment. Fix h
 Convert the skull segment into a surface model.
 
 Follow the instructions above to downsample or remesh the skull in Surface Toolbox. I would target about 1.5-2k points depending on how large the area you kept. The triangles should not be much finer than the picture below. <br>
-<img width="300" alt="image" src="https://github.com/user-attachments/assets/db903da1-66d8-409f-8cf2-60e616af350e" />
+<img width="500" alt="image" src="https://github.com/user-attachments/assets/db903da1-66d8-409f-8cf2-60e616af350e" />
 
 Save the segmentation in .seg.nrrd and model in both stl and obj.
 
@@ -84,7 +84,8 @@ The meshes in both msh and vtk formats should be saved in the folder specificed 
 
 ## 3. Run quality check
 Look at the terminal. It should print out some basic information. <br>
-<img width="300" alt="image" src="https://github.com/user-attachments/assets/9af63575-b4d0-43c3-b418-cb161f5a3f69" />
+<img width="500" alt="image" src="https://github.com/user-attachments/assets/9af63575-b4d0-43c3-b418-cb161f5a3f69" />
+
 Make assure the tetrahedra number is around 150k or smaller. If it exceeds 200k, then the surface model may be too dense or the element size might be too large (default = 2.0mm): `gmsh.model.mesh.field.setString(f, "F", "2")`
 
 Optionaly, you can run a full quality check
