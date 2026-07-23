@@ -1,0 +1,24 @@
+# Measuring RMSE of two copies of the same model nodes—the original model and the hardened rotated copy
+import numpy as np
+
+originalModel = slicer.util.getNode("OriginalModel")
+rotatedModel = slicer.util.getNode("RotatedModel")
+
+# Make copies because Slicer manages the underlying VTK arrays
+originalPoints = slicer.util.arrayFromModelPoints(originalModel).copy()
+rotatedPoints = slicer.util.arrayFromModelPoints(rotatedModel).copy()
+
+if originalPoints.shape != rotatedPoints.shape:
+    raise ValueError(
+        f"Point arrays do not match: "
+        f"{originalPoints.shape} versus {rotatedPoints.shape}"
+    )
+
+# Distance between corresponding vertices
+distances = np.linalg.norm(rotatedPoints - originalPoints, axis=1)
+
+rmse = np.sqrt(np.mean(distances**2))
+
+print(f"RMSE: {rmse:.4f} mm")
+print(f"Mean distance: {np.mean(distances):.4f} mm")
+print(f"Maximum distance: {np.max(distances):.4f} mm")
