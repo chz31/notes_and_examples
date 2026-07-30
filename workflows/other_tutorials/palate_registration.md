@@ -146,3 +146,61 @@ You can then display the last registration results for a comparison.
 
 ## 7. Save the results
 Save the results as previously shown.
+
+
+
+# Local refined registration
+
+## 1. Using curve cut to exclude the surgery region from rigidly-registered models.
+Clone the the rigid registration models from **Surace registration using raw model**
+
+Place a closed curve to be slightly larger than the surgery site (to exclude effects like swelling) at the **target model** (the model that has surgery done) <br>
+<img width="500" alt="image" src="https://github.com/user-attachments/assets/15df3690-c727-4b80-a7f5-05204468b711" />
+
+In 'Dynmic Modeler`, choose 'curve cut` again. Save both 'Inside model`Outside model as a new model` <br>
+<img width="500" alt="image" src="https://github.com/user-attachments/assets/44cd887f-a6cd-4472-92b1-ef00ed60f57f" />
+<img width="400" alt="image" src="https://github.com/user-attachments/assets/d858a441-6830-4ce0-b4b5-05b6c3b32e64" />
+
+
+Open the script slicer_project_curves_between_models.py to prooject curve to the source model:
+
+Change the node names to the existing model names:
+```
+source_points_name = "exclusion_curve"
+source_model_name = "Final Surgery Scan"
+target_model_name = "initial_to_final_rigid"
+output_curve_name = source_points_name + "projected"
+# Update the projected curve name if needed
+```
+
+Then copy-paste these lines in Slicer Python console:
+```
+source_points_name = "exclusion_curve"
+source_model_name = "Final Surgery Scan"
+target_model_name = "initial_to_final_rigid"
+output_curve_name = source_points_name + "_projected"
+
+projected = project_markup_points_between_models(
+    source_points_name=source_points_name,
+    source_model_name=source_model_name,
+    target_model_name=target_model_name,
+    output_points_name= "RoofAttachCurve_projected_to_orbit",
+)
+
+
+curve = create_closed_curve_from_points(
+    points_node_name=projected.GetName(),
+    output_curve_name=output_curve_name,
+)
+```
+<img width="600" alt="image" src="https://github.com/user-attachments/assets/cf62ad07-6544-4ba9-88ed-c6c181ec2c30" />
+
+Afterwards, do another 'curve cut` in `Dyanmic Modeler` and save the `Outside model` <br>
+<img width="400" alt="image" src="https://github.com/user-attachments/assets/4c81fc8a-3765-4ed6-b295-67499fd557c6" />
+<img width="400" alt="image" src="https://github.com/user-attachments/assets/c502e3fc-7d3b-4d04-bcc4-b55a94d149b6" />
+
+
+## 2. Use curve cut to cut a local region surrounding the 
+`
+
+
