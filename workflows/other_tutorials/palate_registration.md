@@ -35,8 +35,12 @@ Your final set up should look like:<br>
 <img width="500" alt="image" src="https://github.com/user-attachments/assets/9b1db52d-b571-45e3-8bc8-c51bc259aff0" />
 
 ## 4. Run the registration
-Click 'Test pointcloud subsampling`, wait for 1-2 minutes until point densities are printed out:<br>
-<img width="400" alt="image" src="https://github.com/user-attachments/assets/b6a42d95-d85b-4fec-a7bd-290137078173" />
+Click 'Test pointcloud subsampling`, wait for 1-2 minutes until point densities are printed out:
+
+Adjust the `Point Density Adjustment` and re-do pointcloud subsampling until each pointcloud has around 5,000 points.S
+
+<img width="400" alt="image" src="https://github.com/user-attachments/assets/aeaa7b80-8438-4cd6-ba43-ca42c1e97f58" />
+
 
 Click `Run rigid registration`, wait for one to a few minutes until a red model is shown. <br>
 <img width="500" alt="image" src="https://github.com/user-attachments/assets/1f02abd3-16db-4449-86d7-476dcf7c9eb0" />
@@ -103,10 +107,10 @@ Select `Curve Cut`<br>
 In `Input nodes`, select `Model` as the model you want to cut, and select `Curve` and `Inside point` accordingly<br>
 <img width="300" alt="image" src="https://github.com/user-attachments/assets/d3a71708-3266-4c10-8363-e68ac010195e" />
 
-In `Output nodes`, simply select the `Oytside model` as the same model you want to cut.
-<img width="400" height="363" alt="image" src="https://github.com/user-attachments/assets/cced9875-cb40-44cd-bed7-c40d59c25eaa" />
+In `Output nodes`, simply select the `Oytside model` as the same model you want to cut. <br>
+<img width="400" alt="image" src="https://github.com/user-attachments/assets/cced9875-cb40-44cd-bed7-c40d59c25eaa" />
 
-Click `Apply`, you should see:
+Click `Apply`, you should see: <br>
 <img width="400" alt="image" src="https://github.com/user-attachments/assets/863b8602-ee7c-4cf2-9c3b-9d0d583bb296" />
 
 ## 4. repeat 2-3 for another model
