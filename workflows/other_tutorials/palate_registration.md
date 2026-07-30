@@ -37,9 +37,9 @@ Your final set up should look like:<br>
 ## 4. Run the registration
 Click 'Test pointcloud subsampling`, wait for 1-2 minutes until point densities are printed out:
 
-Adjust the `Point Density Adjustment` and re-do pointcloud subsampling until each pointcloud has around 5,000 points.S
+Adjust the `Point Density Adjustment` (increase value to increase point density) and re-do pointcloud subsampling until each pointcloud has around 5,000 points.S
 
-<img width="400" alt="image" src="https://github.com/user-attachments/assets/aeaa7b80-8438-4cd6-ba43-ca42c1e97f58" />
+<img width="600" alt="image" src="https://github.com/user-attachments/assets/aeaa7b80-8438-4cd6-ba43-ca42c1e97f58" />
 
 
 Click `Run rigid registration`, wait for one to a few minutes until a red model is shown. <br>
