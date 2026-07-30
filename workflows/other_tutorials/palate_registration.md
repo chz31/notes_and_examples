@@ -210,10 +210,13 @@ Clone the surgical site surface model of the source model (initial model in the 
 
 You can also do the same step for the original regidly registered model.
 
-Before local refined registration:
+Surgical site:<br>
+<img width="400" alt="image" src="https://github.com/user-attachments/assets/83f1e4f0-a775-4726-b820-2a49f04e90c6" />
+
+Before local refined registration:<br>
 <img width="400" lt="image" src="https://github.com/user-attachments/assets/040fa554-9b67-4fe9-94c8-9829cfe9dbdc" />
 
-After local refined registration:
+After local refined registration: <br>
 <img width="400" alt="image" src="https://github.com/user-attachments/assets/440a9d49-dba5-4a48-88b7-4e41904cdcb8" />
 
 
