@@ -229,7 +229,7 @@ preFullNode     = slicer.util.getNode('initial_local_refined_by_annulus_registra
 
 After, copy-paste **the entire script** in Slicer's Python console.
 
-The script will run automatically. Wait a minute. You should be see a model with name `Pre_FullPatch_CPDWarped` created. This is the warped locally registered, ROI-cut source model.
+The script will run automatically. Wait a minute. You should be see a model with name `Pre_FullPatch_CPDWarped` created. This is the warped locally registered, ROI-cut source model.<br>
 <img width="700" alt="image" src="https://github.com/user-attachments/assets/55dd5110-93ec-461c-a5df-e88f207efe7b" />
 
 
