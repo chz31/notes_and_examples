@@ -59,7 +59,7 @@ At the upper left corner, click File --> Save data. Click "Create a Medical Reco
 
 The saved results can be drag and drop into Slicer to reload the whole scene.
 
-# Surface-based registration using the teeth region
+# [Skip] Surface-based registration using the teeth region
 ## 1. Clone the model
 Switch to the `Data` Module. 
 
@@ -150,30 +150,46 @@ Save the results as previously shown.
 
 
 # Local refined registration
+## 1. Use ROI cut to cut a local region in both the source and target models after a global rigid registration
+In `Markup` module`, create a new ROI. Expand `Display` section, then expand`Interaction handles` to check all checkboxes. An interaction handle should appear. Adjust ROI position and size to cover adjacent regions at the same side, include surgery-disrupted region, and exclude the teeth as much as possible. <br>
+<img width="700" alt="image" src="https://github.com/user-attachments/assets/4e8ce5bb-a4d0-4d1c-9cb2-922468743085" />
 
-## 1. Using curve cut to exclude the surgery region from rigidly-registered models.
-Clone the the rigid registration models from **Surace registration using raw model**
+In `Dynamic Modeler`, create an `ROI cut` for one model. Create a new model and change name (e.g., `initial_local`) for `inside` in `Output nodes`.Click `Apply`. </br>
 
-Place a closed curve to be slightly larger than the surgery site (to exclude effects like swelling) at the **target model** (the model that has surgery done) <br>
+Use the same ROI cut to cut the another model, and create a new `inside` model with a new name, such as `final_surgery_local` </br>
+
+<img width="500" alt="image" src="https://github.com/user-attachments/assets/b796e104-9d8b-4f5d-937c-f39d8bfde7d1" />
+<img width="700" alt="image" src="https://github.com/user-attachments/assets/df1c5fc4-5e76-43a7-8f6c-fc1677cd74a2" />
+
+
+## 2. Using curve cut to exclude the surgery region from rigidly-registered models.
+Visualize only the ROI-cut target model (e.g., `final_surgery_cut`). Place a closed curve to enclose the surgery site. The region should be slightly larger than the surgery site <br>
+
 <img width="500" alt="image" src="https://github.com/user-attachments/assets/15df3690-c727-4b80-a7f5-05204468b711" />
 
-In 'Dynmic Modeler`, choose 'curve cut` again. Save both 'Inside model`Outside model as a new model` <br>
-<img width="500" alt="image" src="https://github.com/user-attachments/assets/44cd887f-a6cd-4472-92b1-ef00ed60f57f" />
+In 'Dynmic Modeler`, choose 'curve cut` again. Save both 'Inside model`Outside model as a new model, such as `final_surgery_site` and `final_surgery_annulus` <br>
+<img width="500" alt="image" src="https://github.com/user-attachments/assets/1e0c42be-bacc-4777-a132-89f21b8ce322" />
 <img width="400" alt="image" src="https://github.com/user-attachments/assets/d858a441-6830-4ce0-b4b5-05b6c3b32e64" />
 
 
-Open the script slicer_project_curves_between_models.py to prooject curve to the source model:
+Use the script [slicer_project_curves_between_models.py](https://github.com/chz31/notes_and_examples/blob/main/workflows/other_tutorials/slicer_project_curve_between_models.py) to prooject curve to the source model.
 
-Change the node names to the existing model names:
+**You can download the file by clicking the download button at the upper right corner and open it in a text editor to edit it**
+<img width="300" alt="image" src="https://github.com/user-attachments/assets/e403f658-42bf-4d1e-b39b-a1a99ec94a74" />
+
+First, copy-paste the entire script into the Slicer Python console.<br>
+<img width="300" alt="image" src="https://github.com/user-attachments/assets/ec11e78b-dab7-44a2-ab78-0f12e30429d8" />
+
+
+Open the script in the **text editor**, and change the node names to the existing model names in these lines, then copy-paste them in Slicer's Python console and hit Enter:
 ```
-source_points_name = "exclusion_curve"
-source_model_name = "Final Surgery Scan"
-target_model_name = "initial_to_final_rigid"
+source_points_name = "final_annulus_cut_curve" # the curve you have already placed on a model
+source_model_name = "final_surgery_local" # the ROI-cut model's name where the curve has been placed
+target_model_name = "initial_local" # The model you will project the curve onto.
 output_curve_name = source_points_name + "projected"
-# Update the projected curve name if needed
 ```
 
-Then copy-paste these lines in Slicer Python console:
+Afterwards copy-paste these lines below in Slicer Python console, and hit enter to run the script:
 ```
 projected_curve = project_curve_between_models(
     source_curve_name=source_points_name,
@@ -182,41 +198,38 @@ projected_curve = project_curve_between_models(
     output_curve_name=output_curve_name,
 )
 ```
+
+You should be able to see a curve with `projected` postfix in its name is generated and the curve should be projected onto another model <br>
 <img width="600" alt="image" src="https://github.com/user-attachments/assets/cf62ad07-6544-4ba9-88ed-c6c181ec2c30" />
 
-Afterwards, do another 'curve cut` in `Dyanmic Modeler` and save the `Outside model` <br>
+Afterwards, do another `curve cut` for another model in `Dyanmic Modeler` and save the both the `Inside model` and the `Outside model` and name them to something like `initial_surgery_site` and `initial annulus`. <br>
 <img width="400" halt="image" src="https://github.com/user-attachments/assets/a6e9b755-7586-4f70-aa27-ac8bc1bfbd64" />
 <img width="400" alt="image" src="https://github.com/user-attachments/assets/dd8bbb45-0683-47ec-8387-561521c9c0ae" />
 
 
-## 2. Use curve cut to cut a local region surrounding the 
-In `Markup` module`, create a new ROI. In `Display --> Interaction handles`, check everything. Adjust ROI position and size to cover adjacent regions and exclude the teeth as much as possible. <br>
-<img width="600" alt="image" src="https://github.com/user-attachments/assets/e5fae16f-8c2b-46a8-81bb-bdd6a49c43e1" />
+## 3. Do a refined rigid registration using the annulus models just created and transform the ROI-cut source model
+In `FastModelAlign`, do a refined rigid registration for the curve-cut annulus models.<br>
+<img width="700" alt="image" src="https://github.com/user-attachments/assets/d009fa53-23ae-495f-a12e-192a739544c2" />
 
-In `Dynamic Modeler`, create an `ROI cut` for the  and uncheck `Cap surface` and create a new model for `inside` in `Output nodes`.Click `Apply`. </br>
-<img width="500" alt="image" src="https://github.com/user-attachments/assets/b796e104-9d8b-4f5d-937c-f39d8bfde7d1" />
-<img width="400" alt="image" src="https://github.com/user-attachments/assets/0e0ad61d-0888-413a-a209-ad365475551b" />
+Clone the ROI-cut global-registered source model (`initial_local` in the tutorial video) created from step 1, put it under the newly generated transform from the last step, and **harden the transform**.<br>
+<img width="600" alt="image" src="https://github.com/user-attachments/assets/b26865d7-af4d-4d28-830e-ac036203feba" />
 
-Use the same ROI cut to cut the another model: </br>
-<img width="500" alt="image" src="https://github.com/user-attachments/assets/518f557d-5de1-4bae-91cd-764e6ad01de0" />
-<img width="400" alt="image" src="https://github.com/user-attachments/assets/19e99a8e-b4c7-47b9-a52e-671edb49a7b4" />
+## 4.Warp the source model onto the target model
+This step will preform a warping of the locally registered source annulus model (`initial_to_final_annulus_rigid`) onto the target annulus model (`final_surgery_annulus`), then warp the full locally registered ROI-cut source model along with it to better fit to the surgery site.
 
-## 3. Do a rigid registration using the ROI-cut local models
-In `FastModelAlign`, do another rigid registration for the ROI-cut local models
-<img width="600" alt="image" src="https://github.com/user-attachments/assets/f5b28a9c-6dca-47b0-945d-5c4ad56b5307" />
+Download the script [cpd_annulus_extrapolation_test.py](https://github.com/chz31/notes_and_examples/blob/main/workflows/other_tutorials/cpd_annulus_extrapolation_test.py).
 
-## 4. Use the transform generated by 
-Clone the surgical site surface model of the source model (initial model in the case) created from step 1, put it under the newly generated transform, and harden the transform.
+Open the script in a text editor and update these lines at the top:
+```
+preAnnulusNode  = slicer.util.getNode('initial_to_final_annulus_rigid') # annulus of the local source model after local refined rigid registration
+postAnnulusNode = slicer.util.getNode('final_surgery_annulus') # annulus of the target model
+preFullNode     = slicer.util.getNode('initial_local_refined_by_annulus_registration') # full local source model after local refined rigid registration (annulus + surgical site) 
+```
 
-You can also do the same step for the original regidly registered model.
+After, copy-paste the **entire script** in Slicer's Python console.
 
-Surgical site:<br>
-<img width="400" alt="image" src="https://github.com/user-attachments/assets/83f1e4f0-a775-4726-b820-2a49f04e90c6" />
+The script will run automatically. Wait a minute. You should be see a model with name `Pre_FullPatch_CPDWarped` created. This is the warped locally registered, ROI-cut source model.
+<img width="700" alt="image" src="https://github.com/user-attachments/assets/55dd5110-93ec-461c-a5df-e88f207efe7b" />
 
-Before local refined registration:<br>
-<img width="400" lt="image" src="https://github.com/user-attachments/assets/040fa554-9b67-4fe9-94c8-9829cfe9dbdc" />
-
-After local refined registration: <br>
-<img width="400" alt="image" src="https://github.com/user-attachments/assets/440a9d49-dba5-4a48-88b7-4e41904cdcb8" />
 
 
