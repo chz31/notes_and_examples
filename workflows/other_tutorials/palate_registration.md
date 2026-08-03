@@ -208,20 +208,21 @@ Afterwards, do another `curve cut` for another model in `Dyanmic Modeler` and sa
 
 
 ## 3. Do a refined rigid registration using the annulus models just created and transform the ROI-cut source model
-In `FastModelAlign`, do a refined rigid registration for the curve-cut annulus models.<br>
+In `FastModelAlign`, do a refined rigid registration for the curve-cut annulus models.Set up output model as something like `initial_to_final_annulus_rigid` <br>
 <img width="700" alt="image" src="https://github.com/user-attachments/assets/d009fa53-23ae-495f-a12e-192a739544c2" />
 
-Clone the ROI-cut global-registered source model (`initial_local` in the tutorial video) created from step 1, put it under the newly generated transform from the last step, and **harden the transform**.<br>
-<img width="600" alt="image" src="https://github.com/user-attachments/assets/b26865d7-af4d-4d28-830e-ac036203feba" />
 
 ## 4.Warp the source model onto the target model
 This step will preform a warping of the locally registered source annulus model (`initial_to_final_annulus_rigid`) onto the target annulus model (`final_surgery_annulus`), then warp the full locally registered ROI-cut source model along with it to better fit to the surgery site.
+
+Clone the ROI-cut global-registered source model before local refined registration (`initial_local` in the tutorial video) created from step 1, put it under the newly generated transform from the last step, and **harden the transform**.<br>
+<img width="600" alt="image" src="https://github.com/user-attachments/assets/b26865d7-af4d-4d28-830e-ac036203feba" />
 
 Download the script [cpd_annulus_extrapolation_test.py](https://github.com/chz31/notes_and_examples/blob/main/workflows/other_tutorials/cpd_annulus_extrapolation_test.py).
 
 Open the script in a text editor and update these lines at the top:
 ```
-preAnnulusNode  = slicer.util.getNode('initial_to_final_annulus_rigid') # annulus of the local source model after local refined rigid registration
+preAnnulusNode  = slicer.util.getNode('initial_to_final_annulus_rigid') # the annulus of the local source model after local refined rigid registration; output of the annulus FastModelAlign.
 postAnnulusNode = slicer.util.getNode('final_surgery_annulus') # annulus of the target model
 preFullNode     = slicer.util.getNode('initial_local_refined_by_annulus_registration') # full local source model after local refined rigid registration (annulus + surgical site) 
 ```
