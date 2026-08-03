@@ -222,12 +222,12 @@ Download the script [cpd_annulus_extrapolation_test.py](https://github.com/chz31
 
 Open the script in a text editor and update these lines at the top:
 ```
-preAnnulusNode  = slicer.util.getNode('initial_to_final_annulus_rigid') # the annulus of the local source model after local refined rigid registration; output of the annulus FastModelAlign.
-postAnnulusNode = slicer.util.getNode('final_surgery_annulus') # annulus of the target model
+preAnnulusNode  = slicer.util.getNode('initial_to_final_annulus_rigid') # the annulus of the local source model after local refined rigid registration, i.e., the output of the last FastModelAlign annulus-based registration.
+postAnnulusNode = slicer.util.getNode('final_surgery_annulus') # the annulus of the target model
 preFullNode     = slicer.util.getNode('initial_local_refined_by_annulus_registration') # full local source model after local refined rigid registration (annulus + surgical site) 
 ```
 
-After, copy-paste the **entire script** in Slicer's Python console.
+After, copy-paste **the entire script** in Slicer's Python console.
 
 The script will run automatically. Wait a minute. You should be see a model with name `Pre_FullPatch_CPDWarped` created. This is the warped locally registered, ROI-cut source model.
 <img width="700" alt="image" src="https://github.com/user-attachments/assets/55dd5110-93ec-461c-a5df-e88f207efe7b" />
