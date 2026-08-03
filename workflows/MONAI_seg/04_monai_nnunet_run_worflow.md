@@ -186,6 +186,18 @@ nnUNetv2_predict_from_modelfolder \
   -chk checkpoint_final.pth
 
 ```
+Using few workers if nnUNet reported memory error:
+```
+nnUNetv2_predict_from_modelfolder \
+  -i infer_in \
+  -o infer_out_m1 \
+  -m /media/zhang/UBUNTU/data/dl_data/default_test_2000epoch/results_test/nnUNet_trained_models/Dataset001_monai_nnunet_tr/nnUNetTrainer_2000epochs__nnUNetPlans__3d_fullres \
+  -f all \
+  -chk checkpoint_final.pth \
+  -npp 4 \
+  -nps 4
+```
+
 
 Prediction using all folders:
 ```
@@ -197,7 +209,7 @@ python -m monai.apps.nnunet nnUNetV2Runner plan_and_process \
   --verbose True
 ```
 
-(Not tested) Limit number of workers
+(Not tested) Limit number of workers for all folders:
 ```
 nnUNetv2_predict_from_modelfolder \
   -i infer_in \
