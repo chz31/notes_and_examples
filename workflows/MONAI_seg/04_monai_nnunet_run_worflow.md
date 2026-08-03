@@ -174,6 +174,18 @@ Manually change the paths to `nnUNet_raw_data_base`, `nnUNet_preprocessed`, and 
 
 First, create folders `infer_in` and `infer_out`. Put images there and rename it with format `new_ct_0000.nii.gz`
 
+If running reported input file name error that can be misunderstood as worker number error, rename files with postfix `0000` as:
+```
+cd infer_in
+
+for f in new_ct_*.nii.gz; do
+    case_number="${f#new_ct_}"
+    case_number="${case_number%.nii.gz}"
+    mv -- "$f" "new_ct_${case_number}_0000.nii.gz"
+done
+```
+
+
 ```
 cd /path/to/the/root/of/infer_in
 # for example: cd /media/zhang/UBUNTU/data/dl_data/predictions
