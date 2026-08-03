@@ -186,7 +186,7 @@ nnUNetv2_predict_from_modelfolder \
   -chk checkpoint_final.pth
 
 ```
-Using few workers if nnUNet reported memory error:
+Specify number of workers if nnUNet reported memory error:
 ```
 nnUNetv2_predict_from_modelfolder \
   -i infer_in \
