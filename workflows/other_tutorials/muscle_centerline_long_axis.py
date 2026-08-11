@@ -10,9 +10,9 @@ exec(open(
 
 result = extract_centerline_along_long_axis(
     slicer.util.getNode("nn_inferior_rectus"),
-    "inferior_rectus_right_fx",
+    "inferior_rectus_left",
     slicer.util.getNode("1570_iso"),
-    output_name="1570_right_fx",
+    output_name="1570_left",
     number_of_points=20,
     long_axis_direction_ras=(0, -1, 0),
 )
@@ -24,6 +24,22 @@ slicer.util.saveNode(
 
 The output curve contains a fixed number of control points, so its saved
 ``.mrk.json`` file can be consumed by ``test_muscle_conform.ipynb``.
+
+
+Table results also availabe:
+metrics = result["crossSectionMetrics"]
+
+area = metrics["areaMm2"]
+circularity = metrics["circularity"]
+aspect_ratio = metrics["aspectRatio"]
+percent_length = metrics["percentLength"]
+
+or save as:
+slicer.util.saveNode(
+    result["table"],
+    r"C:\output\1224_left_fx_cross_sections.csv",
+)
+
 
 Method provenance
 -----------------
