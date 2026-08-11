@@ -9,10 +9,10 @@ exec(open(
 ).read())
 
 result = extract_centerline_along_long_axis(
-    slicer.util.getNode("Segmentation_2"),
-    "inferior_rectus_left_fx",
-    slicer.util.getNode("1224_iso"),
-    output_name="1224_left_fx",
+    slicer.util.getNode("nn_inferior_rectus"),
+    "inferior_rectus_right_fx",
+    slicer.util.getNode("1570_iso"),
+    output_name="1570_right_fx",
     number_of_points=20,
     long_axis_direction_ras=(0, -1, 0),
 )
@@ -24,6 +24,22 @@ slicer.util.saveNode(
 
 The output curve contains a fixed number of control points, so its saved
 ``.mrk.json`` file can be consumed by ``test_muscle_conform.ipynb``.
+
+Method provenance
+-----------------
+The principal-axis alignment, oriented resampling, and slice-by-slice
+cross-sectional analysis were adapted from the SlicerBiomech SegmentGeometry
+workflow. Cross-sectional area, centroid, percent length, and the circularity
+definition (4*pi*area/perimeter^2) correspond to metrics provided by that
+module. This script independently implements perimeter using VTK marching
+squares and implements per-section equivalent-ellipse axes/aspect ratio from
+the 2D covariance eigenvalues; these algorithms are not copied from
+SegmentGeometry's perimeter or Feret-diameter implementations.
+
+If this workflow is used in a publication, cite:
+Huie JM, Summers AP, Kawano SM. (2022). SegmentGeometry: a tool for measuring
+second moment of area in 3D Slicer. Integrative Organismal Biology 4(1).
+https://doi.org/10.1093/iob/obac009
 """
 
 import numpy as np
@@ -143,30 +159,113 @@ def _make_reference_volume(name, basis, origin_ras, shape_ijk, spacing_mm):
     return reference
 
 
-def _slice_centroids_ras(mask_node):
-    """Compute one area-weighted binary-mask centroid per nonempty K slice."""
+def _section_perimeter_mm(section_ji, spacing_i, spacing_j):
+    """Measure all 2D contour lengths with marching squares in millimeters."""
+    from vtk.util.numpy_support import numpy_to_vtk
+
+    # Padding closes contours that touch an image boundary.
+    padded = np.pad((section_ji > 0).astype(np.uint8), 1)
+    image = vtk.vtkImageData()
+    image.SetDimensions(padded.shape[1], padded.shape[0], 1)
+    image.SetSpacing(float(spacing_i), float(spacing_j), 1.0)
+    scalars = numpy_to_vtk(
+        padded.ravel(order="C"), deep=True, array_type=vtk.VTK_UNSIGNED_CHAR
+    )
+    image.GetPointData().SetScalars(scalars)
+
+    contours = vtk.vtkMarchingSquares()
+    contours.SetInputData(image)
+    contours.SetValue(0, 0.5)
+    contours.Update()
+    contour_polydata = contours.GetOutput()
+
+    perimeter_mm = 0.0
+    point_ids = vtk.vtkIdList()
+    lines = contour_polydata.GetLines()
+    lines.InitTraversal()
+    while lines.GetNextCell(point_ids):
+        for point_index in range(1, point_ids.GetNumberOfIds()):
+            p0 = np.asarray(
+                contour_polydata.GetPoint(point_ids.GetId(point_index - 1))
+            )
+            p1 = np.asarray(contour_polydata.GetPoint(point_ids.GetId(point_index)))
+            perimeter_mm += np.linalg.norm(p1 - p0)
+    return perimeter_mm
+
+
+def _section_principal_axes_mm(i, j, spacing_i, spacing_j):
+    """Return equivalent-ellipse major/minor diameters from 2D moments."""
+    coordinates_mm = np.column_stack((i * spacing_i, j * spacing_j))
+    centered = coordinates_mm - coordinates_mm.mean(axis=0)
+    covariance = centered.T @ centered / len(coordinates_mm)
+
+    # Each voxel represents a rectangular area, not a dimensionless point.
+    covariance += np.diag([spacing_i**2 / 12.0, spacing_j**2 / 12.0])
+    eigenvalues = np.maximum(np.linalg.eigvalsh(covariance), 0.0)
+    minor_axis_mm, major_axis_mm = 4.0 * np.sqrt(eigenvalues)
+    aspect_ratio = (
+        major_axis_mm / minor_axis_mm if minor_axis_mm > 1e-12 else np.nan
+    )
+    return major_axis_mm, minor_axis_mm, aspect_ratio
+
+
+def _cross_section_metrics(mask_node):
+    """Compute centroid and shape metrics for every nonempty K slice."""
     mask_kji = slicer.util.arrayFromVolume(mask_node)
     ijk_to_ras_matrix = vtk.vtkMatrix4x4()
     mask_node.GetIJKToRASMatrix(ijk_to_ras_matrix)
     ijk_to_ras = slicer.util.arrayFromVTKMatrix(ijk_to_ras_matrix)
     spacing = mask_node.GetSpacing()
-    points = []
-    areas = []
-    slice_indices = []
+    metrics = {
+        "pointsRas": [],
+        "areaMm2": [],
+        "perimeterMm": [],
+        "circularity": [],
+        "majorAxisMm": [],
+        "minorAxisMm": [],
+        "aspectRatio": [],
+        "sliceIndex": [],
+    }
 
     for k, section_ji in enumerate(mask_kji):
         j, i = np.nonzero(section_ji)
         if i.size == 0:
             continue
         point_ijk = np.array([i.mean(), j.mean(), float(k), 1.0])
-        points.append((ijk_to_ras @ point_ijk)[:3])
-        areas.append(float(i.size) * spacing[0] * spacing[1])
-        slice_indices.append(k)
+        area_mm2 = float(i.size) * spacing[0] * spacing[1]
+        perimeter_mm = _section_perimeter_mm(section_ji, spacing[0], spacing[1])
+        circularity = (
+            4.0 * np.pi * area_mm2 / perimeter_mm**2
+            if perimeter_mm > 0
+            else np.nan
+        )
+        # Small digital sections can produce values slightly above the
+        # continuous-shape limit because area and contour are discretized.
+        circularity = min(circularity, 1.0)
+        major_axis_mm, minor_axis_mm, aspect_ratio = _section_principal_axes_mm(
+            i, j, spacing[0], spacing[1]
+        )
 
-    if len(points) < 2:
+        metrics["pointsRas"].append((ijk_to_ras @ point_ijk)[:3])
+        metrics["areaMm2"].append(area_mm2)
+        metrics["perimeterMm"].append(perimeter_mm)
+        metrics["circularity"].append(circularity)
+        metrics["majorAxisMm"].append(major_axis_mm)
+        metrics["minorAxisMm"].append(minor_axis_mm)
+        metrics["aspectRatio"].append(aspect_ratio)
+        metrics["sliceIndex"].append(k)
+
+    if len(metrics["pointsRas"]) < 2:
         raise ValueError("The exported segment occupies fewer than two cross sections")
 
-    return np.asarray(points), np.asarray(areas), np.asarray(slice_indices)
+    for key, values in metrics.items():
+        metrics[key] = np.asarray(values)
+    first_slice = metrics["sliceIndex"][0]
+    slice_range = metrics["sliceIndex"][-1] - first_slice
+    metrics["percentLength"] = (
+        100.0 * (metrics["sliceIndex"] - first_slice) / slice_range
+    )
+    return metrics
 
 
 def _smooth_points(points, smoothing_window):
@@ -211,14 +310,20 @@ def _make_curve(name, points_ras):
     return curve
 
 
-def _make_cross_section_table(name, points_ras, areas_mm2, slice_indices):
+def _make_cross_section_table(name, metrics):
     table_node = slicer.mrmlScene.AddNewNodeByClass("vtkMRMLTableNode", name)
     columns = (
-        ("Slice K", slice_indices, vtk.vtkIntArray),
-        ("R (mm)", points_ras[:, 0], vtk.vtkDoubleArray),
-        ("A (mm)", points_ras[:, 1], vtk.vtkDoubleArray),
-        ("S (mm)", points_ras[:, 2], vtk.vtkDoubleArray),
-        ("Area (mm2)", areas_mm2, vtk.vtkDoubleArray),
+        ("Slice K", metrics["sliceIndex"], vtk.vtkIntArray),
+        ("Percent length", metrics["percentLength"], vtk.vtkDoubleArray),
+        ("R (mm)", metrics["pointsRas"][:, 0], vtk.vtkDoubleArray),
+        ("A (mm)", metrics["pointsRas"][:, 1], vtk.vtkDoubleArray),
+        ("S (mm)", metrics["pointsRas"][:, 2], vtk.vtkDoubleArray),
+        ("Area (mm2)", metrics["areaMm2"], vtk.vtkDoubleArray),
+        ("Perimeter (mm)", metrics["perimeterMm"], vtk.vtkDoubleArray),
+        ("Circularity", metrics["circularity"], vtk.vtkDoubleArray),
+        ("Major axis (mm)", metrics["majorAxisMm"], vtk.vtkDoubleArray),
+        ("Minor axis (mm)", metrics["minorAxisMm"], vtk.vtkDoubleArray),
+        ("Aspect ratio", metrics["aspectRatio"], vtk.vtkDoubleArray),
     )
     for column_name, values, array_type in columns:
         column = array_type()
@@ -267,7 +372,9 @@ def extract_centerline_along_long_axis(
     -------
     dict
         ``curve`` (fixed point count), ``rawCurve``, ``alignedMask``, ``table``,
-        and the long-axis ``basis`` (columns are cross-section X, Y, long axis).
+        NumPy-array ``crossSectionMetrics``, and the long-axis ``basis``
+        (columns are cross-section X, Y, long axis). Aspect ratio is the major
+        divided by minor equivalent-ellipse axis; circularity is 4*pi*A/P^2.
     """
     if not segmentation_node or not reference_volume_node:
         raise ValueError("A segmentation node and reference volume node are required")
@@ -309,13 +416,14 @@ def extract_centerline_along_long_axis(
         slicer.mrmlScene.RemoveNode(aligned_mask)
         raise RuntimeError("Could not export the segment to the long-axis geometry")
 
-    raw_points, areas, slice_indices = _slice_centroids_ras(aligned_mask)
+    cross_section_metrics = _cross_section_metrics(aligned_mask)
+    raw_points = cross_section_metrics["pointsRas"]
     smoothed_points = _smooth_points(raw_points, smoothing_window)
     sampled_points = _resample_polyline(smoothed_points, number_of_points)
     raw_curve = _make_curve(output_name + " Raw Centerline", raw_points)
     curve = _make_curve(output_name + " Centerline", sampled_points)
     table = _make_cross_section_table(
-        output_name + " Cross Sections", raw_points, areas, slice_indices
+        output_name + " Cross Sections", cross_section_metrics
     )
     aligned_mask.CreateDefaultDisplayNodes()
 
@@ -324,6 +432,7 @@ def extract_centerline_along_long_axis(
         "rawCurve": raw_curve,
         "alignedMask": aligned_mask,
         "table": table,
+        "crossSectionMetrics": cross_section_metrics,
         "basis": basis,
         "obbDiametersMm": diameters,
     }
