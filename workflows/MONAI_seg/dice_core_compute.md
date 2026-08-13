@@ -50,10 +50,11 @@ Run nnUNET to generate a prediction
 
 RUn below code again. Also change the segmentation node name:
 ```
+segmentationNode = slicer.util.getNode("1048") #Change it to your segment name
+
 #Change names to be consistent with the color table
 segment_names_to_labels = [(name.replace("_", " "), label) for name, label in segment_names_to_labels] #remove '_'
 
-segmentationNode = slicer.util.getNode("1048") #Change it to your segment name
 segmentation = segmentationNode.GetSegmentation()
 
 for i, item in enumerate(segment_names_to_labels):
