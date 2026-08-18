@@ -47,8 +47,14 @@ Copy-paste lines 30-36 in Slicer's Python console and run it. It should generate
 
 Check if `TissueAttachment_patch_points` and `TissueAttachment_surface_points` have overlapped points. 
 
+**Currently, two point lists are sampled:
+1. All points within the patch by setting `min_anchor_spacing_mm = 0.0` for creating `RestShapeSpringForceFiedl` for soft tissue attachment and stabilization.
+2. Sparse points by setting `min_anchor_spacing_mm = 6.0` for creating bilateral constraints for hard tissue attachment.**
 
-## (Alternative approach) Create roof-tissue pairwise attachment points
+If using SlicerSOFA, then only mrk.json files are needed to directly fetch point indices for establish these attachment.
+
+
+## (Alternative approach and not needed at this point) Create roof-tissue pairwise attachment points
 ### Sample tissue attachment points using the 
 In the script `slicer_tissue_attachment_points_from_patch.py`, update the names in lines 31-35
 ```
