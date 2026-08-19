@@ -233,6 +233,7 @@ The script will run automatically. Wait a minute. You should be see a model with
 <img width="700" alt="image" src="https://github.com/user-attachments/assets/55dd5110-93ec-461c-a5df-e88f207efe7b" />
 
 
+
 # Using the script to run a full registration workflow
 
 1. Using the FastModelAlign module to perform a global registration of the source model (e.g., initial scan) to the target model (e.g., Final Surgery Scan). Name the rigidly registered model as something like "initial_presurgery_global_registered".
@@ -244,7 +245,7 @@ The script will run automatically. Wait a minute. You should be see a model with
 
 <img width="600" alt="image" src="https://github.com/user-attachments/assets/d82620e9-e8e7-4016-8de7-1ed526ae6bab" />
 
-3. Load the script [plate_local_refined_registration](https://github.com/chz31/notes_and_examples/blob/main/workflows/other_tutorials/palate_local_refined_registration.py) in Slicer, either by copy-paste the entire script in Slicer's Python console, or simply run:
+3. Load the script [plate_local_refined_registration.py](https://github.com/chz31/notes_and_examples/blob/main/workflows/other_tutorials/palate_local_refined_registration.py) in Slicer, either by copy-paste the entire script in Slicer's Python console, or simply run:
 `exec(open("/home/zhang/Documents/chi_vs_workspace/other_scripts/palate_local_refined_registration.py").read())` (change the path within the parenthesis to your local path of the downloaded script).
 
 4. Update the object names in lines 25-32 of the scrip, and copy-paste these lines in Slicer Python console. 
