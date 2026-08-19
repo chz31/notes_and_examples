@@ -248,7 +248,7 @@ The script will run automatically. Wait a minute. You should be see a model with
 3. Load the script [plate_local_refined_registration.py](https://github.com/chz31/notes_and_examples/blob/main/workflows/other_tutorials/palate_local_refined_registration.py) in Slicer, either by copy-paste the entire script in Slicer's Python console, or simply run:
 `exec(open("/home/zhang/Documents/chi_vs_workspace/other_scripts/palate_local_refined_registration.py").read())` (change the path within the parenthesis to your local path of the downloaded script).
 
-4. Update the object names in lines 25-32 of the scrip, and copy-paste these lines in Slicer Python console. 
+4. Update the object names in lines 25-32 of the scrip. 
 ```
 result = run_palate_local_refined_registration(
     source_model_name="initial_presurgery_global_registered",
