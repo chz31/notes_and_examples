@@ -233,4 +233,41 @@ The script will run automatically. Wait a minute. You should be see a model with
 <img width="700" alt="image" src="https://github.com/user-attachments/assets/55dd5110-93ec-461c-a5df-e88f207efe7b" />
 
 
+# Using the script to run a full registration workflow
+
+1. Using the FastModelAlign module to perform a global registration of the source model (e.g., initial scan) to the target model (e.g., Final Surgery Scan). Name the rigidly registered model as something like "initial_presurgery_global_registered".
+
+2. In Slicer, create an ROI to cover the surgery site and surrounding region, place a closed curve and inside points on the **target model** (e.g., Final Surgery scan)  (refer to **Local Registration** step 1 and 2 but **DO NOT** perform the ROI and Curve cut).<br>
+- Name ROI as `SurgerySiteROI`
+- Name the closed curve as `target_surgery_site_curve`
+- Name fiducial point list inside the closed curve as `target_surgery_site_inside_points`
+
+<img width="600" alt="image" src="https://github.com/user-attachments/assets/d82620e9-e8e7-4016-8de7-1ed526ae6bab" />
+
+3. Load the script [plate_local_refined_registration](https://github.com/chz31/notes_and_examples/blob/main/workflows/other_tutorials/palate_local_refined_registration.py) in Slicer, either by copy-paste the entire script in Slicer's Python console, or simply run:
+`exec(open("/home/zhang/Documents/chi_vs_workspace/other_scripts/palate_local_refined_registration.py").read())` (change the path within the parenthesis to your local path of the downloaded script).
+
+4. Update the object names in lines 25-32 of the scrip, and copy-paste these lines in Slicer Python console. 
+```
+result = run_palate_local_refined_registration(
+    source_model_name="initial_presurgery_global_registered",
+    target_model_name="Final Surgery Scan",
+    roi_name="SurgerySiteROI",
+    target_curve_name="target_surgery_site_curve",
+    target_inside_points_name="target_surgery_site_inside_points",
+    perform_cpd_warping=1,
+)
+# source_model_name should be the name of the full source model globally registered using FastModelAlign module.
+# target_model_name should be the name of the original target model.
+# roi_name, target_curve_name, and target_inside_points_name should be the names of the objects created in Step 2.
+# If you do not want to run a cpd warping, set perform_cpd_warping=0
+```
+
+5. Copy and paste the updated lines 25-32 in Slicer's Python console and hit Enter to run the script. Wait for a while until the workflow is finished. You should see a list of objects produced:
+- `palate_source_annulus_registered_to_target_annulus` is the source annulus model rigidly registered to the target `palate_target_annulus` model.
+- `palate_source_roi_cut_local_refined` is the ROI-cut further registered by a local refined rigid registration between `palate_source_annulus_registered_to_target_annulus` and `palate_target_annulus`
+- `palate_target_roi_cut` is the ROI-cut target model with surgery site.
+- `palate_source_roi_cut_local_refined_cpd_warped` is the warped model based on a CPD warping between the source `palate_source_annulus_registered_to_target_annulus` and target `palate_target_annulus`.
+
+<img width="600" alt="image" src="https://github.com/user-attachments/assets/216d220c-7654-45c7-baf6-bbd2caa7f94c" />
 
